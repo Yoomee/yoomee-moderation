@@ -10,8 +10,8 @@ module YoomeeModeration
     config.to_prepare do
       require 'googlecharts'
       require 'haml'
-      require 'formtastic'
       User.send(:include, YoomeeContentFilter::UserExtensions)
+      ApplicationController.helper(ContentFlagsHelper)
     end
     
   end

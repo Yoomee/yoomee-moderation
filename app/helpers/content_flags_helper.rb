@@ -1,14 +1,15 @@
 module ContentFlagsHelper
   
   def content_flag_link(*args)
+    include_fancybox_js
     options = args.extract_options!
     options.reverse_merge!(:text => "Report")
     attachable = args.first
     options[:class] = "content_flag_link #{options[:class]}"
     if attachable.nil?
-      link_to_box options.delete(:text), new_content_flagging_path(:url => options.delete(:url) || request.request_uri), options
+      link_to options.delete(:text), new_content_flagging_path(:url => options.delete(:url) || request.request_uri), options
     else
-      link_to_box options.delete(:text), "/#{attachable.class.to_s.underscore}/#{attachable.id}/content_flaggings/new", options    
+      link_to options.delete(:text), "/#{attachable.class.to_s.underscore}/#{attachable.id}/content_flaggings/new", options    
     end
   end
   
@@ -117,6 +118,20 @@ module ContentFlagsHelper
       }
       "
     end
+  end
+  
+  private
+  def include_fancybox_js
+    return true if @included_ymfb_js
+    content_for :head do
+      content = javascript_include_tag('/yoomee_moderation/js/jquery.fancybox-1.3.1.pack.js',
+                             '/yoomee_moderation/js/jquery.easing-1.3.pack.js',
+                             '/yoomee_moderation/js/load_fancybox.js',
+                             '/yoomee_moderation/js/jquery.mousewheel-3.0.2.pack.js', 
+                              :cache => "yoomee_fancy_box") 
+    content << "\n#{stylesheet_link_tag('/yoomee_moderation/css/jquery.fancybox.css', '/yoomee_moderation/css/content_flag_box.css')}".html_safe
+    end
+    @included_ymfb_js = true
   end
   
 end

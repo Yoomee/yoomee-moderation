@@ -8,5 +8,4 @@ Gem::Specification.new do |s|
   s.version = "0.0.1"
   s.add_dependency("haml")
   s.add_dependency("googlecharts")
-  s.add_dependency("formtastic")
 end

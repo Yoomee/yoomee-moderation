@@ -12,9 +12,9 @@ class ContentFlaggingsController < ModerationBaseController
     @content_flagging = ContentFlagging.new(params[:content_flagging].merge(:user => @logged_in_user, :ip_address => request.remote_ip))
     render :update do |page|
       if @content_flagging.save
-        page[:content_flag_form_wrapper].replace(render("content_flaggings/success"))
+        page << "$('#content_flag_form_wrapper').replaceWith('#{escape_javascript(render("content_flaggings/success"))}');"
       else
-        page[:content_flag_box].replace(render("content_flaggings/form", :content_flagging => @content_flagging))
+        page << "$('#content_flag_box').replaceWith('#{escape_javascript(render("content_flaggings/form", :content_flagging => @content_flagging))}');"
       end
       page << "$.fancybox.resize();"
     end

@@ -2,16 +2,22 @@
   #content_flag_form_wrapper
     %h3 Inappropriate Content
     %p
-      Use the box below to provide details about the inappropriate content you have
-      %br
-      found. An email will be sent to the website administrator.
-    -semantic_remote_form_for(content_flagging) do |form|
-      -form.inputs do
-        =form.input :content_flag_id, :as => :hidden
-        =form.input :flagged_by_human, :as => :hidden, :value => true
-        =form.input :content_flag_type, :prompt => "Why is this inappropriate?", :label => false
-        =form.input :message, :label => "Please give some details here", :input_html => {:cols => 69, :rows => 5}
-        =form.input :email, :label => "If you would like to be contacted, please enter your email address:"
-        =form.input :comment, :label => "Please leave the following field blank", :wrapper_html => {:style => "width: 1px; height: 1px; overflow: hidden;"}
-      -form.buttons do
-        =form.commit_button "Report"
+      Use the box below to provide details about the inappropriate content you have found. An email will be sent to the website administrator.
+    -form_for(content_flagging, :url => moderation_content_flaggings_path, :remote => true) do |form|
+      %fieldset.inputs
+        %ol
+          %li.hidden
+            =form.hidden_field :content_flag_id
+          %li.select
+            =form.select :content_flag_type_id, "<option>Why is this inappropriate?</option>" + options_from_collection_for_select(ContentFlagType.all, :id, :name)
+          %li.text
+            =form.label :message, "Please give some details here"
+            =form.text_area :message, :cols => 69, :rows => 5
+          %li.text
+            =form.label :email, "If you would like to be contacted, please enter your email address:"
+            =form.text_field :email
+          %li{:style => "width: 1px; height: 1px; overflow: hidden;"}
+            -# Spam prevention
+            =form.label :comment, "Please leave the following field blank"
+            =form.text_area :comment
+      =form.submit "Report"

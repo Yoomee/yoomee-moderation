@@ -1,0 +1,11 @@
+#content_flag_box {
+  height: 320px;
+  margin: 20px;
+  width: 473px;
+}
+#content_flag_box fieldset {
+  padding: 20px;
+}
+form .text input, form .text_area input {
+  width: auto;
+}
