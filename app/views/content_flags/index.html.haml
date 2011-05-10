@@ -1,0 +1,7 @@
+-title "Flagged content"
+-if !@content_flags.blank?
+  #content_flags_list
+    -@content_flags.each do |content_flag|
+      =render 'content_flag', :content_flag => content_flag
+-else
+  %p.no_flags There are no pending content flags.

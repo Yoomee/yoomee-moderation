@@ -1,0 +1,12 @@
+source "http://rubygems.org"
+
+gemspec
+
+gem "rails", "3.0.7"
+gem 'shoulda'
+gem 'factory_girl'
+gem 'mysql'
+
+# To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
+# gem 'ruby-debug'
+# gem 'ruby-debug19'

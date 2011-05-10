@@ -1,0 +1,12 @@
+#content_filter_box
+  %h2 Did you mean to say that?
+  %p It looks like you might have used language that could be offensive to other people.
+  
+  -form.object.content_filter_errors.each_error do |attr, err|
+    -err.options[:excerpts].each do |excerpt|
+      %p.filtered_excerpt=excerpt
+  %a{:href => '#', :onclick => "if ($('#fancybox-old').length > 0){$.fancybox($('#fancybox-old').html());$.fancybox.center();}else{$.fancybox.close();} return false;"}
+    OK, I'll change it
+  |
+  %a{:href => '#', :onclick => "$(\'##{form.send(:generate_html_id,:acknowledged_failed_content_filter).chomp!('_input')}\').val(true);$(\'##{form_id} input[type=\\\'submit\\\']\').click();$.fancybox.close();return false;"}
+    Submit anyway

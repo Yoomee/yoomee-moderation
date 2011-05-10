@@ -1,0 +1,7 @@
+require File.dirname(__FILE__) + '/tramlines_watch'
+
+# Run all tests
+TramlinesWatch::run_all_tests
+
+watch_file = File.dirname(__FILE__) + "/watch.watch"
+eval(IO.read(watch_file), binding, watch_file)

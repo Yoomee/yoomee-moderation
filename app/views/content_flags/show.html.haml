@@ -1,0 +1,11 @@
+-title @content_flag
+
+-@content_flag.content_flag_fields.each do |flag_field|
+  %h4=flag_field.name.titleize
+  -unless filtered = TramlinesContentFilter::filter_text(flag_field.value)
+    %p
+      %strong Filtered Text
+    %p=filtered[:starred]
+  %p
+    %strong Original Text
+  =link_to_every_word(flag_field, :value)

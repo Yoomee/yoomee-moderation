@@ -1,0 +1,17 @@
+#content_flag_box
+  #content_flag_form_wrapper
+    %h3 Inappropriate Content
+    %p
+      Use the box below to provide details about the inappropriate content you have
+      %br
+      found. An email will be sent to the website administrator.
+    -semantic_remote_form_for(content_flagging) do |form|
+      -form.inputs do
+        =form.input :content_flag_id, :as => :hidden
+        =form.input :flagged_by_human, :as => :hidden, :value => true
+        =form.input :content_flag_type, :prompt => "Why is this inappropriate?", :label => false
+        =form.input :message, :label => "Please give some details here", :input_html => {:cols => 69, :rows => 5}
+        =form.input :email, :label => "If you would like to be contacted, please enter your email address:"
+        =form.input :comment, :label => "Please leave the following field blank", :wrapper_html => {:style => "width: 1px; height: 1px; overflow: hidden;"}
+      -form.buttons do
+        =form.commit_button "Report"

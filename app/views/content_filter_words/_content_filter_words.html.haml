@@ -1,0 +1,19 @@
+#content_filter_words_a2z{:class => whitelist ? "whitelist" : "blacklist"}
+  -('A'..'Z').each do |letter|
+    -if params[:id]==letter
+      =letter
+    -else
+      = link_to_moderation_content(letter, content_filter_words_path(:id => letter, :whitelist => whitelist))
+    |
+  =link_to_unless_current '#', content_filter_words_path(:id => '#')
+  =link_to_function("+", "ContentFilterWordForm.toggleNew()", :id => "add_word_link")
+#content_filter_word_list_wrapper
+  #new_content_filter_word_form
+    =render("form", :content_filter_word => ContentFilterWord.new(:whitelist => whitelist))
+  #content_filter_word_list
+    -if content_filter_words.blank?
+      ="There are currently no words beginning with #{params[:id].to_s}."
+    -else
+      -content_filter_words.each do |content_filter_word|
+        =render("content_filter_words/word", :content_filter_word => content_filter_word)
+  =(will_paginate content_filter_words, :params => {:letter => params[:letter] })

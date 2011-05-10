@@ -1,0 +1,21 @@
+-last ||= false
+-if @content_flag_type.blank?
+  -menu_item = current_page?(resolved_moderation_content_flags_path) ? "resolved" : "inbox"
+-else
+  -menu_item = "content_flag_type"
+-link_to_moderation_content(content_flag_path(content_flag, :menu_item => menu_item, :content_flag_type_id => @content_flag_type.try(:id))) do
+  .content_flag_list_item{:id => "content_flag_#{content_flag.id}", :class => last ? "bottom" : ""}
+    =content_flag_type_box(content_flag)
+    .title
+      =content_flag.id
+      %span
+        %strong=content_flag.name
+        -unless content_flag.text.blank?
+          %em=" - " + truncate(strip_tags(content_flag.text).strip, 70 - content_flag.name.length)
+    .badges
+      -if content_flag.auto_removed?
+        %span.badge.auto_removed{:title => "Auto removed"} !!
+      -if content_flag.flagged_by_system?
+        %span.badge.flagged_by_system{:title => "Auto flagged"}
+      .badge.flaggings_count
+        =content_flag.content_flaggings.count

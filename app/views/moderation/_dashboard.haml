@@ -1,0 +1,47 @@
+#moderation_dashboard
+  #latest_activity.dashboard_item
+    %h2#latest-activity_title Latest activity
+    #graph_axis
+      =image_tag(flag_timeline)
+  
+  #response_time.dashboard_item
+    %h2 Average time to resolve
+    .average_response
+      %span=average_response[0]
+      %span.interval=average_response[0] == 1 ? average_response[1] : average_response[1].pluralize
+    -#
+      %h3.special=average_response[0]
+      %span=average_response[0] == 1 ? average_response[1] : average_response[1].pluralize
+
+  #flag_categories_chart.dashboard_item
+    %h2 Categories
+    #categories_graph
+      =image_tag(flag_type_pie)
+    %ul#legend.lst
+      -ContentFlagType.all.each do |flag_type|
+        %li
+          %div.legend_color{:style => "background-color:#{flag_type.color}"}
+          =flag_type.name
+  -if false
+    #top_flagged_users.flag_user_list.dashboard_item    
+      %h2 Most reported users
+      %ul.lst
+        -User.most_flagged.limit(5).each do |m|
+          %li
+            .image
+              =image_for(m,"30x30#")
+            %span
+              =link_to_self(m, :target => '_blank')
+              %br
+              ="Reported #{m.flag_count} times"
+  #top_flaggers.flag_user_list.dashboard_item    
+    %h2 Top reporters
+    %ul.lst
+      -User.top_flaggers.non_admin.limit(5).each do |m|
+        %li
+          .image
+            =image_for(m,"30x30#")
+          %span
+            =link_to_self(m, :target => '_blank')
+            %br
+            ="Logged #{m.content_flaggings_count} reports"

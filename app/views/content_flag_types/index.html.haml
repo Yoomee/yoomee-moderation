@@ -1,0 +1,9 @@
+-content_for :head do
+  =javascript_include_tag "client/jquery.colorPicker"
+  
+- model_class = controller_name.classify.constantize
+- page_title model_class.name.titleize.pluralize
+
+=render 'content_flag_types/content_flag_types_list', :content_flag_types => @content_flag_types
+-options_panel do
+  =back_link
