@@ -267,7 +267,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#444444', end
 	float: left;
 	background: #444;
 	color: #fff;
-	width: 285px;
+	width: 300px;
 	
 	
 	border-radius:5px;
@@ -295,7 +295,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#444444', end
 }
 
 #latest_activity {
-	width: 630px;
+	width: 660px;
 	margin: 0 0 20px;
 	
 }
