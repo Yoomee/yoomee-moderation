@@ -807,6 +807,10 @@ ul#content_flags_list a:hover .title span{
 	color: black;
 }
 
+#content_flag_types_list .content_flag_type_form {
+  float: left;
+}
+
 #content_flag_types_list .edit_content_flag_type_form .content_flag_type_name_input {
 	width: 240px;
 	float:left;

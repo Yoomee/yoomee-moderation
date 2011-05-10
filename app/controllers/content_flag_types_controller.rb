@@ -2,6 +2,8 @@ class ContentFlagTypesController < ModerationBaseController
   
   admin_only %w{create destroy index show update}
   before_filter :get_content_flag_type, :only => %w{destroy show update}
+
+  helper :content_flags
     
   def index
     @content_flag_types = ContentFlagType.all(:order => :name)

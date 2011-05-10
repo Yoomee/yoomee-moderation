@@ -1,3 +1,7 @@
+:javascript
+  $(document).ready(function() {
+    ContentFlagTypeForm.setup_forms();
+  });
 - model_class = controller_name.classify.constantize
 #content_flag_types_list
   =render 'content_flag_types/new_content_flag_type', :content_flag_type => model_class.new, :show_form => false
