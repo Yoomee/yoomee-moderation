@@ -7,7 +7,7 @@ STATUS_ICONS = {
   :pending  => File.dirname(__FILE__) + "/icons/rails_pending.png"
 }
 
-class TramlinesWatch
+class YoomeeWatch
 
   cattr_accessor :interrupted
 
@@ -27,7 +27,7 @@ class TramlinesWatch
   class << self
 
     def all_tests
-      (tramlines_tests("unit/*.rb") + tramlines_tests("functional/*.rb") + tramlines_tests("unit/helpers/*.rb")).uniq
+      (yoomee_tests("unit/*.rb") + yoomee_tests("functional/*.rb") + yoomee_tests("unit/helpers/*.rb")).uniq
     end
 
     def growl(title, msg, img, pri=0, stick="")
@@ -107,8 +107,8 @@ class TramlinesWatch
       end
     end
     
-    def tramlines_tests(test_suffix)
-      Dir["test/#{test_suffix}"] + Dir["client/test/#{test_suffix}"] + Dir["vendor/plugins/tramlines_*/test/#{test_suffix}"]
+    def yoomee_tests(test_suffix)
+      Dir["test/#{test_suffix}"] + Dir["client/test/#{test_suffix}"] + Dir["vendor/plugins/yoomee_*/test/#{test_suffix}"]
     end
 
   end

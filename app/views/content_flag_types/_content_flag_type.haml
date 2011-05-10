@@ -4,10 +4,10 @@
   %div{:id => "#{unique_id}_content_flag_type_display", :class => "content_flag_type_display", :style => "#{'display:none' if show_form}"}
     -if content_flag_type.respond_to?(:color)
       %div.color_block{:style => "background:#{content_flag_type.color}"}
-    %h3=link_to(content_flag_type,content_flag_type)
+    %h3=link_to(content_flag_type, moderation_content_flag_type_path(content_flag_type))
   %div{:id => "#{unique_id}_content_flag_type_ajax_loader", :class => "ajax_content_flag_type_form_loader", :style => "display:none"}
-    =image_tag('ajax-loader_long_bar.gif')
+    =image_tag('/yoomee_moderation/img/ajax-loader_long_bar.gif')
   =render 'content_flag_types/form', :content_flag_type => content_flag_type, :method => :put, :show_form => show_form   
-  =link_to_remote "delete", :url => {:action => 'destroy', :id => unique_id}, :method => :delete, :confirm => "Are you sure? This will delete all the flaggings in this category.", :loading => "ContentFlagTypeForm.loading('#{unique_id}')", :complete => "ContentFlagTypeForm.complete('#{unique_id}')", :html => {:id => "#{unique_id}_content_flag_type_delete_link", :class => "content_flag_type_function_link", :style => "#{'display:none' if show_form}"}
+  =link_to "delete", {:action => 'destroy', :id => unique_id},:remote => true, :method => :delete, :confirm => "Are you sure? This will delete all the flaggings in this category.", :loading => "ContentFlagTypeForm.loading('#{unique_id}')", :complete => "ContentFlagTypeForm.complete('#{unique_id}')", :html => {:id => "#{unique_id}_content_flag_type_delete_link", :class => "content_flag_type_function_link", :style => "#{'display:none' if show_form}"}
   =link_to_function "#{show_form ? 'cancel' : 'edit'}", "ContentFlagTypeForm.toggle_form('#{unique_id}')", :id => "#{unique_id}_content_flag_type_edit_link", :class => "content_flag_type_function_link"
-  =link_to_function "save", "$('##{unique_id}_content_flag_type_form_submit').click()", :id => "#{unique_id}_content_flag_type_save_link", :class => "content_flag_type_function_link", :style => "#{'display:none' unless show_form}"
+  =link_to_function "save", "$('##{unique_id}_content_flag_type_form').submit()", :id => "#{unique_id}_content_flag_type_save_link", :class => "content_flag_type_function_link", :style => "#{'display:none' unless show_form}"

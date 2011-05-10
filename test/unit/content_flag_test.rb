@@ -35,7 +35,7 @@ class ContentFlagTest < ActiveSupport::TestCase
         def forename;read_attribute(:forename);end
       end
       Factory.create(:content_filter_word)
-      TramlinesContentFilter::flush_words!
+      YoomeeContentFilter::flush_words!
       @user = Factory.create(:user, :forename => "fudge", :bio => "What the fudge?!", :acknowledged_failed_content_filter => true)
       @content_flag = ContentFlag.find_by_attachable_id_and_attachable_type(@user.id, "User")
     end

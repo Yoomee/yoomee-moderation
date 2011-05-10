@@ -1,4 +1,4 @@
-module TramlinesContentFilter::SemanticFormBuilderExtensions
+module YoomeeContentFilter::SemanticFormBuilderExtensions
   
   def self.included(klass)
     klass.alias_method_chain :inline_errors_for, :content_filter
@@ -48,7 +48,7 @@ module TramlinesContentFilter::SemanticFormBuilderExtensions
             $('#fancybox-wrap').after('<div id=\"fancybox-old\">' + $('#fancybox-inner').html() + '</div>');
           }
           $.fancybox(
- '#{escape_javascript(ActionView::Base.new("#{RAILS_ROOT}/vendor/plugins/tramlines_content_flags/app/views").render(:partial => "content_filter/content_filter_box", :locals => {:form => self, :form_id => formtastic_form_id }))}',
+ '#{escape_javascript(ActionView::Base.new("#{RAILS_ROOT}/vendor/plugins/yoomee_content_flags/app/views").render(:partial => "content_filter/content_filter_box", :locals => {:form => self, :form_id => formtastic_form_id }))}',
               {'autoDimensions':false,
                 'width':350,
                 'height':'auto',

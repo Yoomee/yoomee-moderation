@@ -20,7 +20,7 @@ class ContentFilterWord < ActiveRecord::Base
   
   private
   def flush_words
-    TramlinesContentFilter::flush_words!
+    YoomeeContentFilter::flush_words!
   end
 
 end

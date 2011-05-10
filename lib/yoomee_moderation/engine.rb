@@ -1,16 +1,17 @@
 require 'rails'
-module TramlinesModeration
+module YoomeeModeration
   
   class Engine < Rails::Engine
    
     rake_tasks do
-      load "tramlines_moderation/railties/tasks.rake"
+      load "yoomee_moderation/railties/tasks.rake"
     end
 
     config.to_prepare do
       require 'googlecharts'
       require 'haml'
-      User.send(:include, TramlinesContentFilter::UserExtensions)
+      require 'formtastic'
+      User.send(:include, YoomeeContentFilter::UserExtensions)
     end
     
   end

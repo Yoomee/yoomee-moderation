@@ -2,7 +2,7 @@
 
 -@content_flag.content_flag_fields.each do |flag_field|
   %h4=flag_field.name.titleize
-  -unless filtered = TramlinesContentFilter::filter_text(flag_field.value)
+  -unless filtered = YoomeeContentFilter::filter_text(flag_field.value)
     %p
       %strong Filtered Text
     %p=filtered[:starred]

@@ -1,4 +1,4 @@
-module TramlinesContentFilter
+module YoomeeContentFilter
   
   EXCERPT_PADDING = 20
   
@@ -133,7 +133,7 @@ module TramlinesContentFilter
   
   protected
   def content_must_pass_filter
-    return true if skip_content_filter? || TramlinesContentFilter::content_filter_words.blank?
+    return true if skip_content_filter? || YoomeeContentFilter::content_filter_words.blank?
     content_filter_errors.clear
     self.class.filtered_attributes.each do |attr_name|
       filter_attribute(attr_name)
@@ -168,7 +168,7 @@ module TramlinesContentFilter
   end
   
   def filter_attribute(attr_name)
-    if details = TramlinesContentFilter::filter_text(send(attr_name).to_s, :count => true)
+    if details = YoomeeContentFilter::filter_text(send(attr_name).to_s, :count => true)
       self.content_filter_errors.add(attr_name, "did you mean to say this?", details)
     end
   end

@@ -1,67 +1,67 @@
-require File.dirname(__FILE__) + '/tramlines_watch'
+require File.dirname(__FILE__) + '/yoomee_watch'
 
 # Run tests if they change
-watch(/^test\/.+_test\.rb/)  {|md| TramlinesWatch::run_tests(md[0]) }
-watch(/^client\/test\/.+_test\.rb/) {|md| TramlinesWatch::run_tests(md[0])}
-watch(/^vendor\/plugins\/tramlines_.+\/test\/.+_test\.rb/) {|md| TramlinesWatch::run_tests(md[0])}
+watch(/^test\/.+_test\.rb/)  {|md| YoomeeWatch::run_tests(md[0]) }
+watch(/^client\/test\/.+_test\.rb/) {|md| YoomeeWatch::run_tests(md[0])}
+watch(/^vendor\/plugins\/yoomee_.+\/test\/.+_test\.rb/) {|md| YoomeeWatch::run_tests(md[0])}
 
 # Run tests if model changes
 watch(/app\/models\/(.+)\.rb/) do |md|
-  tests = TramlinesWatch::tramlines_tests("unit/#{md[1]}_test.rb")
-  TramlinesWatch::run_tests(tests)
+  tests = YoomeeWatch::yoomee_tests("unit/#{md[1]}_test.rb")
+  YoomeeWatch::run_tests(tests)
 end
 
 # Run tests if plugin model extensions change
 watch(/app\/models\/.+\/(.+)_extensions\.rb/) do |md|
-  tests = TramlinesWatch::tramlines_tests("unit/#{md[1]}_test.rb")
-  TramlinesWatch::run_tests(tests)
+  tests = YoomeeWatch::yoomee_tests("unit/#{md[1]}_test.rb")
+  YoomeeWatch::run_tests(tests)
 end
 
 # Run tests if controller changes
 watch(/app\/controllers\/(.+)_controller\.rb/) do |md|
-  tests = TramlinesWatch::tramlines_tests("functional/#{md[1]}_controller_test.rb")
-  TramlinesWatch::run_tests(tests)
+  tests = YoomeeWatch::yoomee_tests("functional/#{md[1]}_controller_test.rb")
+  YoomeeWatch::run_tests(tests)
 end
 
 # Run tests if plugin controller extensions change
 watch(/app\/controllers\/.+\/(.+)_extensions\.rb/) do |md|
-  tests = TramlinesWatch::tramlines_tests("functional/#{md[1]}_test.rb")
-  TramlinesWatch::run_tests(tests)
+  tests = YoomeeWatch::yoomee_tests("functional/#{md[1]}_test.rb")
+  YoomeeWatch::run_tests(tests)
 end
 
 # Run tests if helper changes
 watch(/app\/helpers\/(.+)_helper\.rb/) do |md|
-  tests = TramlinesWatch::tramlines_tests("unit/helpers/#{md[1]}_helper_test.rb") + TramlinesWatch::tramlines_tests("functional/#{md[1]}_controller_test.rb")
-  TramlinesWatch::run_tests(tests)
+  tests = YoomeeWatch::yoomee_tests("unit/helpers/#{md[1]}_helper_test.rb") + YoomeeWatch::yoomee_tests("functional/#{md[1]}_controller_test.rb")
+  YoomeeWatch::run_tests(tests)
 end
 
 # Run tests if views change
 watch(/app\/views\/(.+)\/.+/) do |md|
-  tests = TramlinesWatch::tramlines_tests("functional/#{md[1]}_controller_test.rb")
-  TramlinesWatch::run_tests(tests)
+  tests = YoomeeWatch::yoomee_tests("functional/#{md[1]}_controller_test.rb")
+  YoomeeWatch::run_tests(tests)
 end
 
 # Run tests if factories change
 watch(/test\/factories\/(.+)\.rb/) do |md|
   model_name = md[1].singularize
-  tests = TramlinesWatch::tramlines_tests("unit/#{model_name}_test.rb") + TramlinesWatch::tramlines_tests("functional/#{model_name}_controller_test.rb")
-  TramlinesWatch::run_tests(tests)
+  tests = YoomeeWatch::yoomee_tests("unit/#{model_name}_test.rb") + YoomeeWatch::yoomee_tests("functional/#{model_name}_controller_test.rb")
+  YoomeeWatch::run_tests(tests)
 end
 
 # Run tests if lib changes
 watch(/lib\/.+\.rb/) do |md|
-  TramlinesWatch.run_all_tests
+  YoomeeWatch.run_all_tests
 end
 
 # Run tests if config changes
 watch(/config\/.+\.rb/) do |md|
-  TramlinesWatch.run_all_tests
+  YoomeeWatch.run_all_tests
 end
 
 # Run db:test:prepare and tests if schema.rb changes
 watch(/^db\/schema.rb/) do |md|
   puts "Running rake db:test:prepare..."
-  TramlinesWatch.growl("Running rake db:test:prepare", '...', '', nil)
-  TramlinesWatch.loud_backquote("rake db:test:prepare")
-  TramlinesWatch.run_all_tests
+  YoomeeWatch.growl("Running rake db:test:prepare", '...', '', nil)
+  YoomeeWatch.loud_backquote("rake db:test:prepare")
+  YoomeeWatch.run_all_tests
 end

@@ -1,63 +1,7 @@
 -content_for :head do
-  =javascript_include_tag "client/jquery.colorPicker"
-  :javascript
-    var ContentFilterWordForm = {
-      loading: function() {
-        $('#new_content_filter_word_submit').hide(0, function() {
-          $('#content_filter_word_loader').show();
-        });
-      },
-      showEdit: function(elem) {
-        container = elem.parents('.content_filter_word');
-        container.children('.content_filter_word_display').hide();
-        container.children('.content_filter_word_form').show();
-      },
-      hideEdit: function(elem) {
-        container = elem.parents('.content_filter_word');
-        container.children('.content_filter_word_form').hide();        
-        container.children('.content_filter_word_display').show();
-      },
-      showNew: function() {
-        $('#new_content_filter_word_form').show(0, function() {
-          $('#content_filter_words_a2z').addClass("open");
-        });
-      },
-      hideNew: function() {
-        $('#new_content_filter_word_form').hide(0, function() {
-          $('#content_filter_words_a2z').removeClass("open");
-        });
-      },
-      toggleNew: function(){
-        if($('#new_content_filter_word_form').is(':visible')){
-          ContentFilterWordForm.hideNew();
-        } else {
-          ContentFilterWordForm.showNew();
-        }
-      }
-    };
-    var ModerationContent ={
-      loading: function() {
-        $('#moderation_right_inner').hide();
-        $('#moderation_right_loader').show();
-        // var active = $('#moderation_sidebar .active');
-        // active.removeClass('active');
-        // active.css('background','none');
-      },
-      finished: function() {
-        $('#moderation_right_loader').hide();
-        $('#moderation_right_inner').show();
-      }
-    };
-    var ContentFlag ={
-      showFiltered: function() {
-        $('.flag_text.unfiltered').hide();
-        $('.flag_text.filtered').show();
-      },
-      showUnfiltered: function() {
-        $('.flag_text.unfiltered').show();
-        $('.flag_text.filtered').hide();
-      }
-    }
+  =javascript_include_tag "/yoomee_moderation/js/jquery.colorPicker"
+  =javascript_include_tag "/yoomee_moderation/js/yoomee_moderation"
+  =stylesheet_link_tag "/yoomee_moderation/styles.css"
 
 -page_title "Moderation", :hidden => true
 #moderation_wrapper
@@ -75,8 +19,6 @@
         =render 'content_flags/content_flag', :content_flag => @content_flag
       -elsif @content_flags && !@content_flags.blank?
         =render 'content_flags/content_flag_list', :content_flags => @content_flags
-      -elsif @content_filter_words
-        =render 'content_filter_words/content_filter_words', :content_filter_words => @content_filter_words, :whitelist => @whitelist
       -else
         No content flags to display.
   

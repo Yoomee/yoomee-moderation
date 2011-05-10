@@ -17,20 +17,20 @@ class ContentFlagTypesController < ModerationBaseController
     render :update do |page|
       show_form = false
       if @content_flag_type.save
-        page.insert_html(:after, "#new_content_flag_type", render("content_flag_types/content_flag_type", :content_flag_type => @content_flag_type, :show_form => false))
-        page << "$('##{@content_flag_type.id}_content_flag_type').effect('highlight', {color:'#E3EBF3'}, 3000);"
+        page << "$('#new_content_flag_type').after('#{escape_javascript(render("content_flag_types/content_flag_type", :content_flag_type => @content_flag_type, :show_form => false))}');"
+        # page << "$('##{@content_flag_type.id}_content_flag_type').effect('highlight', {color:'#E3EBF3'}, 3000);"
         @content_flag_type = ContentFlagType.new
       else
         show_form = true
       end
-      page["new_content_flag_type"].replace(render("content_flag_types/new_content_flag_type", :content_flag_type => @content_flag_type, :show_form => show_form))
+      page << "$('#new_content_flag_type').replaceWith('#{escape_javascript(render("content_flag_types/new_content_flag_type", :content_flag_type => @content_flag_type, :show_form => show_form))}');"
     end
   end
   
   def destroy
     render :update do |page|
       if @content_flag_type.destroy
-        page["#{@content_flag_type.id}_content_flag_type"].remove
+        page << "$('##{@content_flag_type.id}_content_flag_type').remove();"
       else
         render :nothing => true
       end
@@ -49,9 +49,9 @@ class ContentFlagTypesController < ModerationBaseController
   def update
     render :update do |page|
       if @content_flag_type.update_attributes(params[:content_flag_type])
-        page["#{@content_flag_type.id}_content_flag_type"].replace(render("content_flag_types/content_flag_type", :content_flag_type => @content_flag_type, :show_form => false))
+        page << "$('##{@content_flag_type.id}_content_flag_type').replaceWith('#{escape_javascript(render("content_flag_types/content_flag_type", :content_flag_type => @content_flag_type, :show_form => false))}');"
       else
-        page["#{@content_flag_type.id}_content_flag_type_form"].replace(render("content_flag_types/form", :content_flag_type => @content_flag_type, :method => :put, :show_form => true))
+        page << "$('##{@content_flag_type.id}_content_flag_type_form').replaceWith('#{escape_javascript(render("content_flag_types/form", :content_flag_type => @content_flag_type, :method => :put, :show_form => true))}');"
         page << "CategoryForm.show_form('#{@content_flag_type.id}')"
       end
     end

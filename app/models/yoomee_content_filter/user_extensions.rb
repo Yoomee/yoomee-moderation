@@ -1,4 +1,4 @@
-module TramlinesContentFilter::UserExtensions
+module YoomeeContentFilter::UserExtensions
   
   def self.included(klass)
     #klass.content_filter(:forename, :surname, :bio)

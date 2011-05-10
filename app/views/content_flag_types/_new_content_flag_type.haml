@@ -3,7 +3,7 @@
   =link_to_function "Add a new #{content_flag_type.class.name.titleize.downcase}","ContentFlagTypeForm.show_new_form();", :id => "new_content_flag_type_link", :style => "#{'display:none' if show_form}"
   #new_content_flag_type_form{:style => "#{'display:none' unless show_form}"}
     %div{:id => "#{unique_id}_content_flag_type_ajax_loader", :class => "ajax_content_flag_type_form_loader", :style => "display:none"}
-      =image_tag('ajax-loader_long_bar.gif')
+      =image_tag('/yoomee_moderation/img/ajax-loader_long_bar.gif')
     =render 'content_flag_types/form', :content_flag_type => content_flag_type, :method => :post, :show_form => true  
     =link_to_function "cancel", "ContentFlagTypeForm.hide_new_form()", :id => "#{unique_id}_content_flag_type_edit_link", :class => "content_flag_type_function_link"
-    =link_to_function "save", "$('##{unique_id}_content_flag_type_form_submit').click()", :id => "#{unique_id}_content_flag_type_save_link", :class => "content_flag_type_function_link"
+    =link_to_function "save", "$('##{unique_id}_content_flag_type_form').submit()", :id => "#{unique_id}_content_flag_type_save_link", :class => "content_flag_type_function_link"

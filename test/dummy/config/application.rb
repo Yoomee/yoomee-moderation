@@ -7,7 +7,7 @@ require "action_view/railtie"
 require "action_mailer/railtie"
 
 Bundler.require
-require "tramlines_moderation"
+require "yoomee_moderation"
 
 module Dummy
   class Application < Rails::Application

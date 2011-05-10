@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tramlines-moderation (0.0.1)
+    yoomee-moderation (0.0.1)
       formtastic
       googlecharts
       haml
@@ -89,4 +89,4 @@ DEPENDENCIES
   mysql
   rails (= 3.0.7)
   shoulda
-  tramlines-moderation!
+  yoomee-moderation!

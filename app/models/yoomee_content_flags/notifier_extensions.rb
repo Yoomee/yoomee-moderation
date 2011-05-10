@@ -1,4 +1,4 @@
-module TramlinesContentFlags::NotifierExtensions
+module YoomeeContentFlags::NotifierExtensions
   
   def self.included(klass)
     klass.helper :content_flags
