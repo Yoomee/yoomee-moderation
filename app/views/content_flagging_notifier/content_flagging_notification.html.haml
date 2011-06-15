@@ -1,24 +1,24 @@
 %p
   -if @attachable
     = @attachable.respond_to?(:user) && !@attachable.user.nil? ? "#{@attachable.user.full_name}'s" : "A"
-    = @content_flag.attachable_type.titleize.downcase
+    = @attachable.class.to_s.titleize.downcase
   -else
     A page
   has been flagged as inappropriate.
   
--unless @content_flag.message.blank?
+-unless @content_flagging.message.blank?
   %p The person who flagged the content left this message:
   %p
-    %em= '"' + @content_flag.message + '"'
+    %em= '"' + @content_flagging.message + '"'
     
--unless @content_flag.email.blank?
+-unless @content_flagging.email.blank?
   %p
     The person who flagged the content gave their email address:
-    %b= @content_flag.email
+    %b= @content_flagging.email
   
 %p
   You can view the flagged content here:
   -if @attachable
-    =link_to_url(polymorphic_url(@attachable, :host => site_url))
+    =link_to_url(polymorphic_url(@attachable, :host => APP_CONFIG['site_url']))
   -else
-    =content_flag_external_url(@content_flag)
+    =link_to_url(content_flag_external_url(@content_flagging.content_flag))

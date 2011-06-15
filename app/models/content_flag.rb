@@ -11,11 +11,13 @@ class ContentFlag < ActiveRecord::Base
   validates_presence_of :url, :unless => :has_attachable?
 
   scope :latest, :select => "content_flags.*, COUNT(content_flaggings.id) AS flagging_count", :joins => :content_flaggings, :group => "content_flags.id", :order => "flagging_count DESC, content_flags.opened_at DESC"
-  scope :unresolved, :joins => :content_flaggings, :conditions => "content_flags.resolved_at IS NULL", :group => "content_flags.id"
+  scope :unresolved, :select => "DISTINCT content_flags.*", :joins => :content_flaggings, :conditions => "content_flags.resolved_at IS NULL"
   scope :resolved, :conditions => "content_flags.resolved_at IS NOT NULL"
   scope :for_type, lambda {|flag_type| {:joins => :content_flaggings, :conditions => ["content_flaggings.content_flag_type_id = ?", flag_type.id], :group => "content_flags.id"}}
+  scope :ascend_by_resolved_at, :order => "content_flags.resolved_at ASC"
   scope :descend_by_resolved_at, :order => "content_flags.resolved_at DESC"
-
+  scope :not_including, lambda {|content_flag| {:conditions => content_flag.nil? || content_flag.id.nil? ? "" : ["content_flags.id != ?", content_flag.id]}}
+  
   class << self
     
     def average_response_in_seconds
@@ -34,7 +36,7 @@ class ContentFlag < ActiveRecord::Base
     end
     
     def unresolved_count
-      unresolved.count(:select => "DISTINCT content_flags.id")
+      unresolved.count(:id, :distinct => true)
     end
     
   end
@@ -111,7 +113,7 @@ class ContentFlag < ActiveRecord::Base
   
   def text_field
     if has_attachable?
-      text_fields = content_flag_fields.reject{|f| f.name.in?(["user_id","attachable_type"])}
+      text_fields = content_flag_fields.reject{|f| ["user_id","attachable_type"].include?(f.name)}
       if !text_fields.blank?
         if !(t = text_fields.select{|f| f.name == "text"}).blank?
           t.first

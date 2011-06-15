@@ -4,6 +4,8 @@ class ContentFlagType < ActiveRecord::Base
   
   validates_presence_of :name, :color
 
+  scope :ascend_by_name, :order => "content_flag_types.name ASC"
+
   def content_flags
     ContentFlag.for_type(self)
   end

@@ -41,7 +41,7 @@ module YoomeeContentFilter
       local_filtered_words = []
       unfiltered_text, filtered_text = text, text.dup
       unfiltered_text.split_with_index(/[^\w]/).each do |word,index|
-        if word.downcase.in?(content_filter_words.keys)
+        if content_filter_words.keys.include?(word.downcase)
           local_filtered_words << [word, index]
           word_range = (index..index + word.length - 1)
           filtered_text[word_range] = filtered_text[word_range].gsub(/[aeiou]/i, '*')
@@ -158,7 +158,7 @@ module YoomeeContentFilter
   end
 
   def create_or_update_content_flag_fields
-    return true if content_flag.nil? || self.class.to_s.in?(["ContentFlagField", "ContentFlagging"])
+    return true if content_flag.nil? || ["ContentFlagField", "ContentFlagging"].include?(self.class.to_s)
     self.class::filtered_attributes.each do |attribute|
       content_flag.create_content_flag_field_if_changed(attribute, send(attribute))
     end

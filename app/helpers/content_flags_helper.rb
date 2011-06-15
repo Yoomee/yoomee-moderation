@@ -18,7 +18,7 @@ module ContentFlagsHelper
   end
   
   def content_flag_external_url(content_flag)
-    site_url + content_flag_url(content_flag)
+    APP_CONFIG['site_url'] + content_flag_url(content_flag)
   end
   
   def content_flag_type_box(content_flag)
@@ -40,8 +40,8 @@ module ContentFlagsHelper
   def link_to_moderation_content(*args, &block)
     defaults = {:loading => "ModerationContent.loading();", :complete => "ModerationContent.finished();", :method => :get, :remote => true}
     if block_given?
-      args.second ||= {}
-      args.second.reverse_merge!(defaults)
+      args[1] ||= {}
+      args[1].reverse_merge!(defaults)
     else
       args[2] ||= {}
       args[2].reverse_merge!(defaults)
@@ -54,6 +54,13 @@ module ContentFlagsHelper
       html << content_tag(:p, :class => "highlightable"){object.send(attribute).gsub(/[\w]+/,link_to_function('\0', "HighlightText.toggleHighlighted($(this))"))}
       html << render('content_filter_words/multiple_words_form', :uid => "#{object.class.to_s.underscore}_#{object.id}_#{attribute}")
     end
+  end
+  
+  def link_to_url(url, *args, &block)
+    options = args.extract_options!.symbolize_keys.reverse_merge!(:http => true, :target => "_blank")
+    link_url = url.match(/^.*:\/\//) ? url : "http://" + url
+    url = url.sub(/^https?:\/\//, '') if !options[:http]
+    link_to(url, link_url, options, &block)
   end
   
   def moderation_back_link
@@ -69,16 +76,55 @@ module ContentFlagsHelper
     options = {:menu_item => params[:menu_item], :content_flag_type_id => @content_flag_type.try(:id)}
     out = ""
     if prev_content_flag = content_flag.prev(options)
-      out << link_to_moderation_content("< Previous", content_flag_path(prev_content_flag, options))
+      out << link_to_moderation_content("< Previous", moderation_content_flag_path(prev_content_flag, options))
     else
       out << content_tag(:span, "< Previous")
     end
     if next_content_flag = content_flag.next(options)
-      out << link_to_moderation_content("Next >", content_flag_path(next_content_flag, options))
+      out << link_to_moderation_content("Next >", moderation_content_flag_path(next_content_flag, options))
     else
       out << content_tag(:span, "Next >")
     end
     out
+  end
+  
+  def read_more_truncate(text, options ={})
+    return if text.blank?
+    options.reverse_merge!(:length => 400, :simple_format => true, :more_link => "Read more", :less_link => "Read less", :truncate_string => '...', :quotes => false)
+    text = strip_tags(text)
+    if text.length <= options[:length]
+      text = "\"#{text}\"" if options[:quotes]
+      if options[:simple_format]
+        return auto_link(simple_format(text), :target => '_blank')
+      else
+        return auto_link(text, :target => '_blank')
+      end
+    end
+    javascript = "var par = $(this).parentsUntil('.read_more_wrapper').last(); par.hide(); par.siblings().show();"
+    read_more_link = link_to_function(options[:more_link], javascript, :class => 'read_more_link')
+    read_less_link = link_to_function(options[:less_link], javascript, :class => 'read_less_link')
+
+    text = auto_link(text, :all, :target => "_blank")
+    head = text.word_truncate_html(options[:length], options[:truncate_string]) + read_more_link
+    full = text + read_less_link
+    if options[:quotes]
+      head = "\"#{head}\""
+      full = "\"#{full}\""
+    end
+    if options[:simple_format]
+      head = simple_format(head)
+      full = simple_format(full)
+    end
+    # head = text[/\A.{#{l}}\w*\;?/m][/.*[\w\;]/m]
+    
+    ret = "<span class='read_more_wrapper'>
+            <span class='read_more_trunc'>
+              #{head}
+            </span>
+            <span class='read_more_full' style='display:none'>
+              #{full}
+            </span>
+          </span>" 
   end
   
   def highlight_content_filter_words_javascript

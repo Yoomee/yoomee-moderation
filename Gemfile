@@ -2,7 +2,9 @@ source "http://rubygems.org"
 
 gemspec
 
-gem "rails", "3.0.7"
+# TODO: these are only needed here when running 'rake test' as dummy app uses this file
+# best to add_dependency for gem in yoomee_moderation.gemspec
+gem "rails", "3.0.3"
 gem 'shoulda'
 gem 'factory_girl'
 gem 'mysql'

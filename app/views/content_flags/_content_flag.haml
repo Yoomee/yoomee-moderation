@@ -1,7 +1,7 @@
 #content_flag_header
   #left_links
     =moderation_back_link
-    =link_to_moderation_content("Mark as resolved", resolve_content_flag_path(content_flag), :method => :put)
+    =link_to_moderation_content("Mark as resolved", resolve_moderation_content_flag_path(content_flag), :method => :put)
   #right_links
     =moderation_nav_links(content_flag)
 #content_flag
@@ -10,10 +10,10 @@
   #flag_edit_links  
     -if content_flag.removable?
       -if content_flag.removed?
-        =link_to_moderation_content("Restore", restore_content_flag_path(content_flag, :in_moderation => true), :method => :put)
+        =link_to_moderation_content("Restore", restore_moderation_content_flag_path(content_flag, :in_moderation => true), :method => :put)
       -else
-        =link_to_moderation_content("Remove", remove_content_flag_path(content_flag, :in_moderation => true), :method => :delete)
-    -if content_flag.attachable.is_a?(WallPost)
+        =link_to_moderation_content("Remove", remove_moderation_content_flag_path(content_flag, :in_moderation => true), :method => :delete)
+    -if false && content_flag.attachable.is_a?(WallPost)
       =link_to_box("Edit", edit_wall_post_path(content_flag.attachable, :in_moderation => true))
     -if content_flag.has_attachable?
       =link_to("View in context", content_flag.attachable, :target => "_blank")
@@ -48,8 +48,8 @@
 
   
 -#
-  %p=link_to_moderation_content("reload", content_flag_path(content_flag))
-  %p=link_to("hard reload", content_flag_path(content_flag))
+  %p=link_to_moderation_content("reload", moderation_content_flag_path(content_flag))
+  %p=link_to("hard reload", moderation_content_flag_path(content_flag))
 
   %br
 

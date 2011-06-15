@@ -1,0 +1,8 @@
+# Please change these details according to your site
+
+admin_email: admin@site.com
+site_name: Your Site Name
+site_url: http://site.com
+development:
+  site_name: Your Site Name Development
+  site_url: http://localhost:3000

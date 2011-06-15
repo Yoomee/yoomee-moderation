@@ -1,4 +1,4 @@
--if !content_flags == []
+-if content_flags != []
   #content_flags_list
     -content_flags.each do |content_flag|
       =render 'content_flags/content_flag_list_item', :content_flag => content_flag, :last => (content_flag == content_flags.last)

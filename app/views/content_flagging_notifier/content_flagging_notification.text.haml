@@ -1,0 +1,25 @@
+-first_line = ""
+-if @attachable
+  -first_line += @attachable.respond_to?(:user) && !@attachable.user.nil? ? "#{@attachable.user.full_name}'s " : "A "
+  -first_line += @attachable.class.to_s.titleize.downcase
+-else
+  -first_line += "A page"
+-first_line += " has been flagged as inappropriate."
+
+=first_line
+
+-unless @content_flagging.message.blank?
+  The person who flagged the content left this message:
+  
+  
+  = '"' + @content_flagging.message + '"'
+  
+    
+-unless @content_flagging.email.blank?
+  ="The person who flagged the content gave their email address: #{@content_flagging.email}"
+  
+You can view the flagged content here:
+-if @attachable
+  =polymorphic_url(@attachable, :host => APP_CONFIG['site_url'])
+-else
+  =content_flag_external_url(@content_flagging.content_flag)

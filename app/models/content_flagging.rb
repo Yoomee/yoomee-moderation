@@ -5,7 +5,7 @@ class ContentFlagging < ActiveRecord::Base
   belongs_to :content_flag_type
   belongs_to :flagger, :class_name => "User", :foreign_key => "user_id"
   
-  delegate :attachable,:has_attachable?, :to => :content_flag
+  delegate :attachable, :has_attachable?, :to => :content_flag
   
   validates_format_of :email, :with => /^[^\s]+@[^\s]*\.[a-z]{2,}$/, :allow_blank => true
   validates_presence_of :content_flag_type_id, :message => "please give a reason why you are reporting this content"
@@ -14,13 +14,14 @@ class ContentFlagging < ActiveRecord::Base
   attr_accessor :comment
   validates_length_of :comment, :maximum => 0, :allow_nil => true, :message => "must be blank"
 
-  #after_create :send_email
+  after_create :send_email
   before_create :create_content_flag_fields_and_unresolve
   after_create :auto_remove_content_flag
 
   scope :created_at_greater_than, lambda {|date| {:conditions => ["created_at > ?", date]}}
   scope :from_today, lambda {{:conditions => ["content_flaggings.created_at > ?", Date.today]}}
   scope :from_different_people, :group => "content_flaggings.ip_address, content_flaggings.user_id"
+  scope :not_flagged_by_human, :conditions => {:flagged_by_human => false}
   
   class << self
     def last_month
@@ -84,7 +85,7 @@ class ContentFlagging < ActiveRecord::Base
   end
 
   def send_email
-    Notifier.deliver_content_flag_notification(self)
+    ContentFlaggingNotifier.content_flagging_notification(self).deliver
   end
-
+  
 end

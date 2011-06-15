@@ -3,7 +3,7 @@
   -menu_item = current_page?(resolved_moderation_content_flags_path) ? "resolved" : "inbox"
 -else
   -menu_item = "content_flag_type"
--link_to_moderation_content(content_flag_path(content_flag, :menu_item => menu_item, :content_flag_type_id => @content_flag_type.try(:id))) do
+-link_to_moderation_content(moderation_content_flag_path(content_flag, :menu_item => menu_item, :content_flag_type_id => @content_flag_type.try(:id))) do
   .content_flag_list_item{:id => "content_flag_#{content_flag.id}", :class => last ? "bottom" : ""}
     =content_flag_type_box(content_flag)
     .title
