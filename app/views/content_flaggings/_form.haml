@@ -1,4 +1,14 @@
 #content_flag_box
+
+  :javascript
+    $(document).ready(function() {
+      $('#content_flag_box form').bind("ajax:beforeSend", function(event) {
+        $('#content_flagging_submit').hide(0, function() {
+          $('#content_flagging_form_loader').show();     
+        });
+      });
+    });
+    
   #content_flag_form_wrapper
     %h3 Inappropriate Content
     %p
@@ -25,3 +35,5 @@
             =form.label :comment, "Please leave the following field blank"
             =form.text_area :comment
       =form.submit "Report"
+      #content_flagging_form_loader{:style => "display:none"}
+        =moderation_image_tag("ajax_loader_light.gif")
