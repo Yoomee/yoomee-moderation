@@ -9,7 +9,11 @@
           %li.hidden
             =form.hidden_field :content_flag_id
           %li.select
-            =form.select :content_flag_type_id, "<option>Why is this inappropriate?</option>" + options_from_collection_for_select(ContentFlagType.all, :id, :name)
+            =form.label:content_flag_type_id, "Why is this inappropriate?"
+            =form.select :content_flag_type_id, "<option value=''>Please select...</option>" + options_from_collection_for_select(ContentFlagType.all, :id, :name)
+            -if content_flagging.errors.invalid?(:content_flag_type_id)
+              %p.inline-errors
+                =form.error_message_on(:content_flag_type_id)
           %li.text
             =form.label :message, "Please give some details here"
             =form.text_area :message, :cols => 69, :rows => 5

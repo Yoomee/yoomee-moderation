@@ -11,7 +11,7 @@
     -else
       =form.commit_button "Save", :button_html => {:id => "content_filter_word_submit_#{content_filter_word.id}", :style => "display:none"}
 #content_filter_word_loader{:style => "display:none"}
-  =image_tag("ajax_loader_grey.gif")
+  =moderation_image_tag("ajax_loader_grey.gif")
 .function_links
   =link_to_function("Cancel", "ContentFilterWordForm.hideEdit($(this))")
   =link_to_function("Save", "$('#content_filter_word_submit_#{content_filter_word.id}').click()")

@@ -11,7 +11,7 @@ class ContentFlagType < ActiveRecord::Base
   end
   
   def unresolved_content_flag_count
-    content_flags.unresolved.count(:select => "DISTINCT content_flags.id")
+    content_flags.unresolved.count(:id, :distinct => true)
   end
   
   def hex_color

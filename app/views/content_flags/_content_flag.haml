@@ -1,12 +1,15 @@
 #content_flag_header
   #left_links
     =moderation_back_link
-    =link_to_moderation_content("Mark as resolved", resolve_moderation_content_flag_path(content_flag), :method => :put)
+    - if content_flag.resolved?
+      =link_to_moderation_content("Mark as unresolved", unresolve_moderation_content_flag_path(content_flag, :menu_item => "inbox"), :method => :put)
+    -else
+      =link_to_moderation_content("Mark as resolved", resolve_moderation_content_flag_path(content_flag, :menu_item => params[:menu_item], :content_flag_type_id => @content_flag_type.try(:id)), :method => :put)
   #right_links
     =moderation_nav_links(content_flag)
 #content_flag
   %h4#content_flag_title
-    ="#{content_flag.name} <span>ref #{content_flag.id}</span>"
+    ="#{content_flag.name} <span>ref #{content_flag.id}</span>".html_safe
   #flag_edit_links  
     -if content_flag.removable?
       -if content_flag.removed?
@@ -27,23 +30,23 @@
       -content_flag.history(true).each do |item|
         %li{:id => "#{item.class.to_s.underscore}_#{item.id}", :class => item.class.to_s.underscore}
           -if item.is_a?(ContentFlagging)
-            ="Flagged as #{content_flag_type_label(item.content_flag_type)}"
-            ="by #{link_to(item.flagger,item.flagger, :target => '_blank')}" if item.flagger
+            ="Flagged as #{content_flag_type_label(item.content_flag_type)}".html_safe
+            ="by #{link_to(item.flagger.full_name, item.flagger, :target => '_blank')}".html_safe if item.flagger
             ="#{time_ago_in_words(item.created_at)} ago"
             -unless (item.message.blank? && item.email.blank?)
               =link_to_function("View Report", "$(this).parent().toggleClass('open')")
               .report
                 -if !item.message.blank?
                   %p
-                    %b Message:
+                    %b Their message:
                     =item.message
                 -if !item.email.blank?
                   %p
                     %b Email:
                     =item.email
           -else
-            ="Set to &ldquo;#{read_more_truncate(item.value, :length => 50, :simple_format => false)}&rdquo;"
-            ="by #{link_to_self(content_flag.user)}" unless content_flag.user.blank?
+            ="Set to &ldquo;#{read_more_truncate(item.value, :length => 50, :simple_format => false)}&rdquo;".html_safe
+            ="by #{link_to(content_flag.user.full_name, content_flag.user, :target => '_blank')}".html_safe unless content_flag.user.blank?
             ="#{time_ago_in_words(item.created_at)} ago"
 
   

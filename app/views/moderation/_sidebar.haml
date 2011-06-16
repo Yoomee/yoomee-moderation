@@ -1,3 +1,8 @@
+:javascript
+  $(document).ready(function() {
+    ModerationSideBar.setup_links();
+  });
+  
 %ul#moderation_sidebar
   %li#inbox{:class => @dashboard ? "active" : ""}
     %span=link_to_moderation_content("Dashboard", moderation_path)

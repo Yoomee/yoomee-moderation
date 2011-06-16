@@ -1,5 +1,7 @@
 %h3 Inappropriate content reported
 
-%p Thanks for reporting this content as inappropriate. The system administrators have been notified. We apologise for any offensive material posted.
+%p.moderation_success_message
+  Thanks for reporting this content as inappropriate. The system administrators have been notified. We apologise for any offensive material posted.
   
-%p=link_to_function("Close", "$.fancybox.close()", :class => "bttn_l")
+%p.moderation_close_link
+  =link_to_function("Close", "$.fancybox.close()", :class => "bttn_l")

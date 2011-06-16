@@ -158,6 +158,9 @@
   margin-top: 60px;
 }
 
+#moderation_right_loader img {
+  display: inline;
+}
 
 #moderation_right_col {
   float:left;
@@ -165,9 +168,7 @@
   background: #fff;
   border-left:none;
   min-height:550px;
-    
 
-  
   -webkit-box-shadow:inset 0 0 10px rgba(0,0,0,0.2), -1px 0 0px #ccc;
   -moz-box-shadow:inset 0 0 10px rgba(0,0,0,0.2), -1px 0 0px #ccc;
   box-shadow:inset 0 0 10px rgba(0,0,0,0.2), -1px 0 0px #ccc;
@@ -175,9 +176,6 @@
    -moz-border-radius-bottomright:6px;
    -webkit-border-bottom-right-radius:6px;
 	border-bottom-right-radius:6px;
-  
-  
-  
 }
 
 #graph_axis {
@@ -461,11 +459,11 @@ p.no_flags {
 }
 
 /*.flag_history li.content_flagging{
-  background: url("/images/disclosure_closed.png") no-repeat 0px 10px;
+  background: url("/img/disclosure_closed.png") no-repeat 0px 10px;
 }
 
 .flag_history li.content_flagging.open{
-  background-image: url("/images/disclosure_open.png");
+  background-image: url("/img/disclosure_open.png");
 }*/
 
 
@@ -560,12 +558,12 @@ ul#content_flags_list a:hover .title span{
   width:20px;
   height:20px;
   margin-right:5px;
-  background: url("/images/robot.png") no-repeat bottom right;
+  background: url("/yoomee_moderation/img/robot.png") no-repeat bottom right;
 }
 .content_flag_list_item .badge.flaggings_count{
   height:20px;
   margin-right:5px;
-  background: url("/images/flag.png") no-repeat bottom right;
+  background: url("/yoomee_moderation/img/flag.png") no-repeat bottom right;
   padding-right:15px;
 }
 .content_flag_list_item .badge.auto_removed {

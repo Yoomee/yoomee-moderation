@@ -6,7 +6,7 @@
       %div.color_block{:style => "background:#{content_flag_type.color}"}
     %h3=link_to(content_flag_type, moderation_content_flag_type_path(content_flag_type))
   %div{:id => "#{unique_id}_content_flag_type_ajax_loader", :class => "ajax_content_flag_type_form_loader", :style => "display:none"}
-    =image_tag('/yoomee_moderation/img/ajax-loader_long_bar.gif')
+    =moderation_image_tag('ajax-loader_long_bar.gif')
   =render 'content_flag_types/form', :content_flag_type => content_flag_type, :method => :put, :show_form => show_form
   
   =link_to "delete", moderation_content_flag_type_path(content_flag_type), :remote => true, :method => :delete, :confirm => "Are you sure? This will delete all the flaggings in this category.", :id => "#{unique_id}_content_flag_type_delete_link", :"data-cft" => unique_id, :class => "content_flag_type_function_link content_flag_type_delete_link", :style => "#{'display:none' if show_form}"

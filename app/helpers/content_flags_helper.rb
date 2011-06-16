@@ -1,4 +1,14 @@
 module ContentFlagsHelper
+
+  include YoomeeModeration::ReadMoreTruncate
+  
+  def comment_url(comment, url_options = {})
+    polymorphic_url(comment.commentable, url_options)
+  end
+  
+  def comment_path(comment, url_options = {})
+    polymorphic_path(comment.commentable, url_options)
+  end
   
   def content_flag_link(*args)
     include_fancybox_js
@@ -30,15 +40,16 @@ module ContentFlagsHelper
         stripes << content_tag(:div, "", :class => "stripe", :style => "background-color:#{color};width:#{width}px")
       end
     end
-    content_tag(:div, stripes, :class => "content_flag_type_box")
+    content_tag(:div, stripes.html_safe, :class => "content_flag_type_box")
   end
   
   def content_flag_type_label(content_flag_type)
-    content_tag(:span, content_flag_type, :class => "content_flag_type_label", :style => "background-color:#{content_flag_type.color}")
+    content_tag(:span, content_flag_type, :class => "content_flag_type_label", :style => "background-color:#{content_flag_type.try(:color) || "#2795E4"}")
   end
   
   def link_to_moderation_content(*args, &block)
-    defaults = {:loading => "ModerationContent.loading();", :complete => "ModerationContent.finished();", :method => :get, :remote => true}
+    defaults = {:method => :get, :remote => true}
+    defaults[:class] = "moderation_content_link #{defaults[:class]}".strip
     if block_given?
       args[1] ||= {}
       args[1].reverse_merge!(defaults)
@@ -65,11 +76,15 @@ module ContentFlagsHelper
   
   def moderation_back_link
     if params[:menu_item]=="content_flag_type" && @content_flag_type
-      url = content_flag_type_path(@content_flag_type)
+      url = moderation_content_flag_type_path(@content_flag_type)
     else
       url = params[:menu_item]=="resolved" ? resolved_moderation_content_flags_path : inbox_moderation_content_flags_path
     end
-    link_to_moderation_content("&larr; Back", url)
+    link_to_moderation_content("&larr; Back".html_safe, url)
+  end
+  
+  def moderation_image_tag(source, options = {})
+    image_tag("/yoomee_moderation/img/#{source}", options)
   end
   
   def moderation_nav_links(content_flag)
@@ -85,46 +100,7 @@ module ContentFlagsHelper
     else
       out << content_tag(:span, "Next >")
     end
-    out
-  end
-  
-  def read_more_truncate(text, options ={})
-    return if text.blank?
-    options.reverse_merge!(:length => 400, :simple_format => true, :more_link => "Read more", :less_link => "Read less", :truncate_string => '...', :quotes => false)
-    text = strip_tags(text)
-    if text.length <= options[:length]
-      text = "\"#{text}\"" if options[:quotes]
-      if options[:simple_format]
-        return auto_link(simple_format(text), :target => '_blank')
-      else
-        return auto_link(text, :target => '_blank')
-      end
-    end
-    javascript = "var par = $(this).parentsUntil('.read_more_wrapper').last(); par.hide(); par.siblings().show();"
-    read_more_link = link_to_function(options[:more_link], javascript, :class => 'read_more_link')
-    read_less_link = link_to_function(options[:less_link], javascript, :class => 'read_less_link')
-
-    text = auto_link(text, :all, :target => "_blank")
-    head = text.word_truncate_html(options[:length], options[:truncate_string]) + read_more_link
-    full = text + read_less_link
-    if options[:quotes]
-      head = "\"#{head}\""
-      full = "\"#{full}\""
-    end
-    if options[:simple_format]
-      head = simple_format(head)
-      full = simple_format(full)
-    end
-    # head = text[/\A.{#{l}}\w*\;?/m][/.*[\w\;]/m]
-    
-    ret = "<span class='read_more_wrapper'>
-            <span class='read_more_trunc'>
-              #{head}
-            </span>
-            <span class='read_more_full' style='display:none'>
-              #{full}
-            </span>
-          </span>" 
+    out.html_safe
   end
   
   def highlight_content_filter_words_javascript

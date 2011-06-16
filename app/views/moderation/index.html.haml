@@ -1,7 +1,7 @@
 -content_for :head do
   =javascript_include_tag "/yoomee_moderation/js/jquery.colorPicker.js"
   =javascript_include_tag "/yoomee_moderation/js/yoomee_moderation.js"
-  =stylesheet_link_tag "/yoomee_moderation/styles.css"
+  =stylesheet_link_tag "/yoomee_moderation/css/styles.css"
 
 -page_title "Moderation", :hidden => true
 #moderation_wrapper
@@ -11,7 +11,7 @@
     =render("moderation/sidebar", :content_flag_types => @content_flag_types)
   #moderation_right_col    
     #moderation_right_loader
-      =image_tag("ajax_loader_light.gif")
+      =moderation_image_tag("ajax_loader_light.gif")
     #moderation_right_inner
       -if @dashboard
         =render 'moderation/dashboard', :flag_timeline => @flag_timeline, :average_response => @average_response, :flag_type_pie => @flag_type_pie

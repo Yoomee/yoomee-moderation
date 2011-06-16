@@ -16,7 +16,7 @@ ActionController::Routing::Routes.draw do |map|
     end
     resources :content_flaggings
     resources :content_flag_types
-    map.moderation "/moderation/content_flags", :controller => "content_flags"
+    map.moderation "/moderation/home", :controller => "content_flags"
   end
   
   map.connect ":attachable_type/:attachable_id/content_flaggings/new", :controller => "content_flaggings", :action => "new"

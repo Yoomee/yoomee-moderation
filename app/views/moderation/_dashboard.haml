@@ -42,6 +42,6 @@
           .image
             =image_for(m,"30x30#")
           %span
-            =link_to_self(m, :target => '_blank')
+            =link_to(m.full_name, m, :target => '_blank')
             %br
             ="Logged #{m.content_flaggings_count} reports"

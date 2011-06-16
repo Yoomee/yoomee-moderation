@@ -10,7 +10,7 @@ class ContentFlagsController < ModerationBaseController
   end
   
   def create
-    @content_flag = ContentFlag.new(params[:content_flag].merge(:user => @logged_in_user))
+    @content_flag = ContentFlag.new(params[:content_flag].merge(:user => current_user))
     render :update do |page|
       if @content_flag.save
         page[:content_flag_form_wrapper].replace(render("content_flags/success"))
@@ -54,7 +54,7 @@ class ContentFlagsController < ModerationBaseController
   def remove
     @content_flag = ContentFlag.find(params[:id])
     if @content_flag.removable?
-      @content_flag.attachable.update_attributes(:removed_by => @logged_in_user, :removed_at => Time.now)
+      @content_flag.attachable.update_attributes(:removed_by => current_user, :removed_at => Time.now)
     end
     if params[:in_moderation]
       replace_moderation_content('content_flag', :content_flag => @content_flag)
@@ -65,7 +65,7 @@ class ContentFlagsController < ModerationBaseController
   
   def resolve
     @content_flag = ContentFlag.find(params[:id])
-    @content_flag.resolve!(@logged_in_user)
+    @content_flag.resolve!(current_user)
     @content_flag_type = ContentFlagType.find_by_id(params[:content_flag_type_id])
     if next_content_flag = @content_flag.next(:menu_item => params[:menu_item], :content_flag_type_id => @content_flag_type.try(:id))
       replace_moderation_content('content_flag', :content_flag => next_content_flag)

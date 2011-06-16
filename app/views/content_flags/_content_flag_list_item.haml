@@ -11,7 +11,7 @@
       %span
         %strong=content_flag.name
         -unless content_flag.text.blank?
-          %em=" - " + truncate(strip_tags(content_flag.text).strip, 70 - content_flag.name.length)
+          %em=" - " + truncate(strip_tags(content_flag.text).strip, :length => 70 - content_flag.name.length)
     .badges
       -if content_flag.auto_removed?
         %span.badge.auto_removed{:title => "Auto removed"} !!

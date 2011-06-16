@@ -1,11 +1,51 @@
 #content_flag_box {
-  height: 320px;
+  height: 350px;
   margin: 20px;
   width: 473px;
+}
+#content_flag_box form {
+  margin-top: 10px;
 }
 #content_flag_box fieldset {
   padding: 20px;
 }
-form .text input, form .text_area input {
+#content_flag_box fieldset.inputs li {
+  float: left;
+  clear: both;
+  margin-bottom: 10px;
+}
+#content_flag_box fieldset.inputs li.hidden {
+  display:none;
+}
+#content_flag_box form .text input, #content_flag_box form .text_area input {
   width: auto;
+}
+#content_flag_box p.inline-errors {
+  line-height: 100%;
+  font-size: 11px;
+  float: left;
+  color: white;
+  padding: 4px 4px;
+  background: #9C0081;
+  margin: 0;
+}
+#content_flag_box .moderation_success_message {
+  margin: 20px 0;
+}
+#content_flag_box .moderation_close_link a {
+  background: #c5c7c8;
+  border:none;
+	font-weight: bold;
+	font-size: 14px;
+  color:#fff;
+	margin:10px 0 4px 3px;
+	padding:5px 15px 6px;
+	float:left;
+	-moz-border-radius:5px;
+  -webkit-border-radius:5px;
+  border-radius:5px;
+  -webkit-box-shadow:1px 1px 1px #e8e8e8, 0px 1px 2px #ccc;
+  -moz-box-shadow:1px 1px 1px #e8e8e8, 0px 1px 2px #ccc;
+  box-shadow:1px 1px 1px #e8e8e8, 0px 1px 2px #ccc;    
+  text-shadow:0 -1px 0 #000;
 }

@@ -13,7 +13,7 @@ class ContentFlag < ActiveRecord::Base
   scope :latest, :select => "content_flags.*, COUNT(content_flaggings.id) AS flagging_count", :joins => :content_flaggings, :group => "content_flags.id", :order => "flagging_count DESC, content_flags.opened_at DESC"
   scope :unresolved, :select => "DISTINCT content_flags.*", :joins => :content_flaggings, :conditions => "content_flags.resolved_at IS NULL"
   scope :resolved, :conditions => "content_flags.resolved_at IS NOT NULL"
-  scope :for_type, lambda {|flag_type| {:joins => :content_flaggings, :conditions => ["content_flaggings.content_flag_type_id = ?", flag_type.id], :group => "content_flags.id"}}
+  scope :for_type, lambda {|flag_type| {:select => "DISTINCT content_flags.*", :joins => :content_flaggings, :conditions => ["content_flaggings.content_flag_type_id = ?", flag_type.id]}}
   scope :ascend_by_resolved_at, :order => "content_flags.resolved_at ASC"
   scope :descend_by_resolved_at, :order => "content_flags.resolved_at DESC"
   scope :not_including, lambda {|content_flag| {:conditions => content_flag.nil? || content_flag.id.nil? ? "" : ["content_flags.id != ?", content_flag.id]}}
@@ -84,7 +84,7 @@ class ContentFlag < ActiveRecord::Base
 
   def name
     if user
-      user.full_name
+      has_attachable? ? "#{user.full_name}'s #{attachable_type.downcase}" : user.full_name
     elsif has_attachable?
       "A #{attachable_type.downcase}"
     else

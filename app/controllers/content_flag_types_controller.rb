@@ -26,6 +26,7 @@ class ContentFlagTypesController < ModerationBaseController
         show_form = true
       end
       page << "$('#new_content_flag_type').replaceWith('#{escape_javascript(render("content_flag_types/new_content_flag_type", :content_flag_type => @content_flag_type, :show_form => show_form))}');"
+      page << "$(document).ready(function() {ContentFlagTypeForm.setup_form('#{@content_flag_type.id}');});"
     end
   end
   
@@ -54,8 +55,9 @@ class ContentFlagTypesController < ModerationBaseController
         page << "$('##{@content_flag_type.id}_content_flag_type').replaceWith('#{escape_javascript(render("content_flag_types/content_flag_type", :content_flag_type => @content_flag_type, :show_form => false))}');"
       else
         page << "$('##{@content_flag_type.id}_content_flag_type_form').replaceWith('#{escape_javascript(render("content_flag_types/form", :content_flag_type => @content_flag_type, :method => :put, :show_form => true))}');"
-        page << "CategoryForm.show_form('#{@content_flag_type.id}')"
+        page << "CategoryForm.show_form('#{@content_flag_type.id}');"
       end
+      page << "$(document).ready(function() {ContentFlagTypeForm.setup_form('#{@content_flag_type.id}');});"
     end
   end
   

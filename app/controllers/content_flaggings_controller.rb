@@ -9,7 +9,7 @@ class ContentFlaggingsController < ModerationBaseController
   end
   
   def create
-    @content_flagging = ContentFlagging.new(params[:content_flagging].merge(:user => @logged_in_user, :ip_address => request.remote_ip, :flagged_by_human => true))
+    @content_flagging = ContentFlagging.new(params[:content_flagging].merge(:user => current_user, :ip_address => request.remote_ip, :flagged_by_human => true))
     render :update do |page|
       if @content_flagging.save
         page << "$('#content_flag_form_wrapper').replaceWith('#{escape_javascript(render("content_flaggings/success"))}');"

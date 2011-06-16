@@ -3,6 +3,8 @@ class ModerationBaseController < ApplicationController
   class_inheritable_hash :permission_levels
   self.permission_levels = {}
 
+  before_filter :gate_keep
+
   class << self
     
     def admin_only(*actions)
@@ -11,7 +13,6 @@ class ModerationBaseController < ApplicationController
 
     def open_action?(action)
       [:open_action, nil].include? permission_level(action.to_sym)
-      # !owner_only_action?(action) && !member_only_action?(action) && !admin_only_action?(action)
     end
 
     def permission_level(action)
@@ -32,11 +33,15 @@ class ModerationBaseController < ApplicationController
     
   end
   
-  def open_action?(action)
-    self.class::open_action?(action)
+  def gate_keep
+    open_action? || require_admin
+  end
+  
+  def open_action?
+    self.class::open_action?(action_name)
   end
 
-  protected  
+  protected
   def replace_moderation_content(partial_name, options={})
     wrapper_class = options.delete(:wrapper_class)
     if !(active_color = options.delete(:active_color))
@@ -53,6 +58,7 @@ class ModerationBaseController < ApplicationController
       if active_color
         page << "$('#moderation_right_col').css('border-color', '#{active_color}');"
       end
+      page << "ModerationContent.finished();"
       
     end
   end
