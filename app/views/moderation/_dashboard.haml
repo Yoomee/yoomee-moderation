@@ -29,7 +29,7 @@
         -User.most_flagged.limit(5).each do |m|
           %li
             .image
-              =image_for(m,"30x30#")
+              =user_avatar(m, :size => :tiny)
             %span
               =link_to_self(m, :target => '_blank')
               %br
@@ -40,7 +40,7 @@
       -User.top_flaggers.non_admin.limit(5).each do |m|
         %li
           .image
-            =image_for(m,"30x30#")
+            =user_avatar(m, :size => :tiny)
           %span
             =link_to(m.full_name, m, :target => '_blank')
             %br

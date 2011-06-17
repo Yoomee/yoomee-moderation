@@ -3,5 +3,5 @@
     -content_flags.each do |content_flag|
       =render 'content_flags/content_flag_list_item', :content_flag => content_flag, :last => (content_flag == content_flags.last)
 -else
-  %p.no_flags There are no pending reports.
+  %p.no_flags There are no pending flags.
 %br.clear

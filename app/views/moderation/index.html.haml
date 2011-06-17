@@ -2,6 +2,7 @@
   =javascript_include_tag "/yoomee_moderation/js/jquery.colorPicker.js"
   =javascript_include_tag "/yoomee_moderation/js/yoomee_moderation.js"
   =stylesheet_link_tag "/yoomee_moderation/css/styles.css"
+  =include_yoomee_fancybox_js
 
 -page_title "Moderation", :hidden => true
 #moderation_wrapper
@@ -17,8 +18,8 @@
         =render 'moderation/dashboard', :flag_timeline => @flag_timeline, :average_response => @average_response, :flag_type_pie => @flag_type_pie
       -elsif @content_flag && !@content_flag.blank?
         =render 'content_flags/content_flag', :content_flag => @content_flag
-      -elsif @content_flags && !@content_flags.blank?
+      -elsif @content_flags && @content_flags != []
         =render 'content_flags/content_flag_list', :content_flags => @content_flags
       -else
-        No content flags to display.
+        %p.no_flags There are no pending flags.
   

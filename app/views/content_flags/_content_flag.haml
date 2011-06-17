@@ -1,3 +1,8 @@
+:javascript
+  $(document).ready(function() {
+    YoomeeFancy.init();
+  });
+  
 #content_flag_header
   #left_links
     =moderation_back_link
@@ -20,34 +25,45 @@
       =link_to_box("Edit", edit_wall_post_path(content_flag.attachable, :in_moderation => true))
     -if content_flag.has_attachable?
       =link_to("View in context", content_flag.attachable, :target => "_blank")
-  #flag_text
-    =read_more_truncate(simple_format("&ldquo;#{content_flag.current_text}&rdquo;"))
+  -if !content_flag.current_text.blank?
+    #flag_text
+      =read_more_truncate(simple_format("&ldquo;#{content_flag.current_text}&rdquo;"))
+  -if content_flag.attachable.is_a?(Asset)
+    .attachable_preview
+      -link_to(content_flag.attachable.url(:user_large), :class => "yoomee_fancy") do
+        =uploaded_asset_tag(content_flag.attachable, :medium, content_flag.attachable.description)
   %br
   #flag_history
     %p
       %strong History
     %ul.flag_history
+      -if content_flag.resolved?
+        %li.resolved_at_item
+          Resolved
+          ="by #{link_to(content_flag.resolved_by.full_name, content_flag.resolved_by, :target => '_blank')}".html_safe if content_flag.resolved_by
+          ="on #{content_flag.resolved_at_string}"
       -content_flag.history(true).each do |item|
-        %li{:id => "#{item.class.to_s.underscore}_#{item.id}", :class => item.class.to_s.underscore}
-          -if item.is_a?(ContentFlagging)
-            ="Flagged as #{content_flag_type_label(item.content_flag_type)}".html_safe
-            ="by #{link_to(item.flagger.full_name, item.flagger, :target => '_blank')}".html_safe if item.flagger
-            ="#{time_ago_in_words(item.created_at)} ago"
-            -unless (item.message.blank? && item.email.blank?)
-              =link_to_function("View Report", "$(this).parent().toggleClass('open')")
-              .report
-                -if !item.message.blank?
-                  %p
-                    %b Their message:
-                    =item.message
-                -if !item.email.blank?
-                  %p
-                    %b Email:
-                    =item.email
-          -else
-            ="Set to &ldquo;#{read_more_truncate(item.value, :length => 50, :simple_format => false)}&rdquo;".html_safe
-            ="by #{link_to(content_flag.user.full_name, content_flag.user, :target => '_blank')}".html_safe unless content_flag.user.blank?
-            ="#{time_ago_in_words(item.created_at)} ago"
+        -if item.is_a?(ContentFlagging) || !item.value.blank?
+          %li{:id => "#{item.class.to_s.underscore}_#{item.id}", :class => item.class.to_s.underscore}
+            -if item.is_a?(ContentFlagging)
+              ="Flagged as #{content_flag_type_label(item.content_flag_type)}".html_safe
+              ="by #{link_to(item.flagger.full_name, item.flagger, :target => '_blank')}".html_safe if item.flagger
+              ="#{time_ago_in_words(item.created_at)} ago"
+              -unless (item.message.blank? && item.email.blank?)
+                =link_to_function("View Report", "$(this).parent().toggleClass('open')")
+                .report
+                  -if !item.message.blank?
+                    %p
+                      %b Their message:
+                      =item.message
+                  -if !item.email.blank?
+                    %p
+                      %b Email:
+                      =item.email
+            -else
+              ="Set to &ldquo;#{read_more_truncate(item.value, :length => 50, :simple_format => false)}&rdquo;".html_safe
+              ="by #{link_to(content_flag.user.full_name, content_flag.user, :target => '_blank')}".html_safe unless content_flag.user.blank?
+              ="#{time_ago_in_words(item.created_at)} ago"
 
   
 -#

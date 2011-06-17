@@ -357,7 +357,7 @@ p.no_flags {
 	display: block;
 	float: left;
 	color: #333;
-	background:#c9c9c9 url(/yoomee_moderation/img/sprite.png) repeat-x 0 0;
+	background:#c9c9c9;
 	font-size: 14px;
 	line-height: 100%;
 	padding: 5px 10px;
@@ -431,7 +431,7 @@ p.no_flags {
 
 #moderation_right_col #content_flag #flag_text {
   border:2px solid #ccc;
-  padding:10px 15px 0px;
+  padding:10px 15px 10px;
   font-size:16px;
   float: left;
   
@@ -445,6 +445,12 @@ p.no_flags {
   -webkit-box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
   -moz-box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
   box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+}
+
+#moderation_right_col #content_flag .attachable_preview {
+  float: left;
+  clear: both;
+  margin-top: 10px;
 }
 
 #moderation_right_col #content_flag .flag_history {

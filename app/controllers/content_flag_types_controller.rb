@@ -41,8 +41,9 @@ class ContentFlagTypesController < ModerationBaseController
   end
   
   def show
+    @content_flags = @content_flag_type.content_flags.unresolved.latest
     if request.xhr?
-      replace_moderation_content("content_flags/content_flag_list", :content_flags => @content_flag_type.content_flags.unresolved.latest, :active_li => "content_flag_type_#{@content_flag_type.id}", :active_color => @content_flag_type.color)
+      replace_moderation_content("content_flags/content_flag_list", :content_flags => @content_flags, :active_li => "content_flag_type_#{@content_flag_type.id}", :active_color => @content_flag_type.color)
     else
       set_up_sidebar 
       render :template => 'moderation/index'

@@ -117,6 +117,8 @@ class ContentFlag < ActiveRecord::Base
       if !text_fields.blank?
         if !(t = text_fields.select{|f| f.name == "text"}).blank?
           t.first
+        elsif !(t = text_fields.select{|f| f.name == "description"}).blank?
+          t.first
         else
           text_fields.first
         end
@@ -170,6 +172,12 @@ class ContentFlag < ActiveRecord::Base
     !resolved_at.blank?
   end
   alias_method :resolved?, :resolved
+
+  def resolved_at_string
+    return "" if resolved_at.nil?
+    time_str = resolved_at.year == Time.now.year ? "%e %b at %H:%M" : "%e %b %y at %H:%M"
+    resolved_at.strftime(time_str)
+  end
 
   def text
     text_field ? text_field.value : nil
