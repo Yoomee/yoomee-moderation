@@ -1,3 +1,22 @@
 = Yoomee-moderation
 
-This project rocks and uses MIT-LICENSE.
+A simple flagging system for moderating content on a site. The gem provides a helper method to generate a flag link that users (logged-in or not) can click to report inappropriate content. Once clicked, a fancybox will appear for them to enter a brief message.
+
+  yoomee_flag_link(@asset, :text => "Flag this photo as offensive", :class => "flag-photo")
+
+An administrator is notified by email for each new flagging and all the flaggings can be viewed by admins in the moderation area.
+
+  moderation_path -> '/moderation/home'
+
+== Installation
+
+Add the gem to your Gemfile:
+
+  gem "yoomee-moderation"
+ 
+Add migrations to db/migrate, assets to /public and yoomee_moderation.yml to /config using the install rake task. Then run all the new migrations.
+
+ rake yoomee_moderation:install
+ rake db:migrate
+ 
+Edit config/yoomee_moderation.yml to set where moderation emails get sent to etc.

@@ -2,7 +2,7 @@
 # require 'haml'
 class ContentFlagsController < ModerationBaseController
   
-  admin_only :index, :remove, :resolve, :restore, :resolved
+  admin_only :index, :inbox, :remove, :restore, :resolve, :unresolve, :resolved, :show
   
   def new
     @content_flag = ContentFlag.new(:url => params[:url], :attachable => get_attachable)

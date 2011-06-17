@@ -28,10 +28,6 @@ module ContentFlagsHelper
     content_flag.attachable.nil? ? content_flag.url : url_for(content_flag.attachable)
   end
   
-  def content_flag_external_url(content_flag)
-    APP_CONFIG['site_url'] + content_flag_url(content_flag)
-  end
-  
   def content_flag_type_box(content_flag)
     stripes = ""
     unless (colors = content_flag.content_flag_types.ascend_by_name.uniq.collect(&:color)).blank?
@@ -83,8 +79,8 @@ module ContentFlagsHelper
   
   def link_to_url(url, *args, &block)
     options = args.extract_options!.symbolize_keys.reverse_merge!(:http => true, :target => "_blank")
-    link_url = url.match(/^.*:\/\//) ? url : "http://" + url
-    url = url.sub(/^https?:\/\//, '') if !options[:http]
+    link_url = url.match(/^.+\:\/\//) ? url : "http://" + url
+    url = url.sub(/^https?:\/\//, '') if !options.delete(:http)
     link_to(url, link_url, options, &block)
   end
   

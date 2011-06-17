@@ -20,6 +20,6 @@
   
 You can view the flagged content here:
 -if @attachable
-  =polymorphic_url(@attachable, :host => APP_CONFIG['site_url'])
+  =polymorphic_url(@attachable)
 -else
-  =content_flag_external_url(@content_flagging.content_flag)
+  =content_flag_url(@content_flagging.content_flag)
