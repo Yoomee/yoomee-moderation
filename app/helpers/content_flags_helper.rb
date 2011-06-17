@@ -22,6 +22,7 @@ module ContentFlagsHelper
       link_to options.delete(:text), "/#{attachable.class.to_s.underscore}/#{attachable.id}/content_flaggings/new", options    
     end
   end
+  alias_method :yoomee_flag_link, :content_flag_link
   
   def content_flag_url(content_flag)
     content_flag.attachable.nil? ? content_flag.url : url_for(content_flag.attachable)
