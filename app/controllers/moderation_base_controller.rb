@@ -36,7 +36,7 @@ class ModerationBaseController < ApplicationController
   end
   
   def gate_keep
-    open_action? || require_admin
+    open_action? || ((defined? require_admin) ? require_admin : false)
   end
   
   def open_action?

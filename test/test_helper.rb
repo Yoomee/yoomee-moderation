@@ -1,9 +1,11 @@
-# Configure Rails Envinronment
+# Configure Rails Environment
 ENV["RAILS_ENV"] = "test"
 
 require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 require "rails/test_help"
-require File.dirname(__FILE__) + '/shoulda_extensions'
+require "shoulda"
+require "factory_girl"
+#require File.dirname(__FILE__) + '/shoulda_extensions'
 
 Factory.class_eval do
   self.definition_file_paths << "#{File.dirname(__FILE__)}/factories"

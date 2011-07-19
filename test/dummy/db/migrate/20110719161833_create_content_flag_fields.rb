@@ -4,6 +4,7 @@ class CreateContentFlagFields < ActiveRecord::Migration
       t.integer :content_flag_id
       t.string :name
       t.text :value
+      t.timestamps
     end
   end
 

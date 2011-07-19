@@ -1,4 +1,4 @@
-ActionController::Routing::Routes.draw do |map|
+Rails.application.routes.draw do
 
   namespace :moderation, :module => nil do
     resources :content_flags do
@@ -13,9 +13,11 @@ ActionController::Routing::Routes.draw do |map|
     end
     resources :content_flaggings
     resources :content_flag_types
-    map.moderation "/moderation/home", :controller => "content_flags"
+    
+        
   end
+  match '/moderation/home', :to => 'content_flags#index', :as => 'moderation'
   
-  map.connect ":attachable_type/:attachable_id/content_flaggings/new", :controller => "content_flaggings", :action => "new"
+  match ":attachable_type/:attachable_id/content_flaggings/new", :to => 'content_flaggings#new'
 
 end

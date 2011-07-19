@@ -1,7 +1,7 @@
 -unique_id = content_flag_type.id.to_s
 -form_url = content_flag_type.new_record? ? moderation_content_flag_types_path : moderation_content_flag_type_path(content_flag_type)
   
--form_for(content_flag_type, :url => form_url, :remote => true, :html => {:id => "#{unique_id}_content_flag_type_form", :class => "content_flag_type_form", :"data-cft" => unique_id, :style => "#{'display:none' unless show_form}"}) do |form|
+=form_for(content_flag_type, :url => form_url, :remote => true, :html => {:id => "#{unique_id}_content_flag_type_form", :class => "content_flag_type_form", :"data-cft" => unique_id, :style => "#{'display:none' unless show_form}"}) do |form|
   -if content_flag_type.respond_to?(:color)
     =form.text_field :color, :class => "content_flag_type_color_input", :id => "#{unique_id}_content_flag_type_color_input"
   =form.text_field :name, :class => "content_flag_type_name_input"
