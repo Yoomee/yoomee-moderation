@@ -1,5 +1,0 @@
--form_remote_tag :url => content_filter_words_path, :method => :post, :html => {:onsubmit => "HighlightText.loading($(this))", :style => "display:none", :id => uid} do
-  =hidden_field_tag :content_flag_form_id, uid
-  =submit_tag("Add selected words to dictionary")
-  .ajax_loader{:style => "display:none"}
-    =moderation_image_tag("ajax_loader.gif")

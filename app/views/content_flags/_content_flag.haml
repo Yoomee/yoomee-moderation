@@ -15,14 +15,7 @@
 #content_flag
   %h4#content_flag_title
     ="#{content_flag.name} <span>ref #{content_flag.id}</span>".html_safe
-  #flag_edit_links  
-    -if content_flag.removable?
-      -if content_flag.removed?
-        =link_to_moderation_content("Restore", restore_moderation_content_flag_path(content_flag, :in_moderation => true), :method => :put)
-      -else
-        =link_to_moderation_content("Remove", remove_moderation_content_flag_path(content_flag, :in_moderation => true), :method => :delete)
-    -if false && content_flag.attachable.is_a?(WallPost)
-      =link_to_box("Edit", edit_wall_post_path(content_flag.attachable, :in_moderation => true))
+  #flag_edit_links
     -if content_flag.has_attachable?
       =link_to("View in context", content_flag.attachable, :target => "_blank")
   -if !content_flag.current_text.blank?
@@ -64,27 +57,3 @@
               ="Set to &ldquo;#{read_more_truncate(item.value, :length => 50, :simple_format => false)}&rdquo;".html_safe
               ="by #{link_to(content_flag.user.full_name, content_flag.user, :target => '_blank')}".html_safe unless content_flag.user.blank?
               ="#{time_ago_in_words(item.created_at)} ago"
-
-  
--#
-  %p=link_to_moderation_content("reload", moderation_content_flag_path(content_flag))
-  %p=link_to("hard reload", moderation_content_flag_path(content_flag))
-
-  %br
-
-  -content_flag.content_flag_fields.each do |flag_field|
-    %strong=flag_field.name.titleize
-    =link_to_every_word(flag_field, :value)
-
-  %strong Flaggings
-  %ul
-    -content_flag.content_flaggings.each do |content_flagging|
-      %li
-        =content_flagging.content_flag_type
-        |
-        =content_flagging.user
-        |
-        =content_flagging.message
-        |
-        ="#{time_ago_in_words(content_flagging.created_at)} ago"
-  

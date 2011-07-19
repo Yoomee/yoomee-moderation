@@ -1,4 +1,4 @@
-module YoomeeModeration::ReadMoreTruncate
+module ReadMoreTruncateHelper
   
   def read_more_truncate(text, options = {})
     return if text.blank?
@@ -31,7 +31,6 @@ module YoomeeModeration::ReadMoreTruncate
       head = simple_format(head)
       full = simple_format(full)
     end
-    # head = text[/\A.{#{l}}\w*\;?/m][/.*[\w\;]/m]
     
     ret = "<span class='read_more_wrapper'>
             <span class='read_more_trunc'>

@@ -1,4 +1,6 @@
 class ModerationBaseController < ApplicationController
+  
+  helper :read_more_truncate
 
   class_inheritable_hash :permission_levels
   self.permission_levels = {}
@@ -49,12 +51,9 @@ class ModerationBaseController < ApplicationController
     end
     
     render :update do |page|
-      #page["moderation_right_inner"].replace_html(render(partial_name, options))
       page << "$('#moderation_right_inner').html('#{escape_javascript(render(partial_name, options))}');"
-      #page["moderation_sidebar"].replace(render("moderation/sidebar"))
       page << "$('#moderation_sidebar').replaceWith('#{escape_javascript(render("moderation/sidebar"))}');"
       page << "$('#moderation_wrapper').attr('class', '#{escape_javascript(wrapper_class)}');"
-      #page << "FancyboxLoader.loadAll();"
       if active_color
         page << "$('#moderation_right_col').css('border-color', '#{active_color}');"
       end

@@ -11,8 +11,8 @@ module YoomeeModeration
       require 'googlecharts'
       require 'haml'
       require 'yoomee_moderation/app_config'
-      User.send(:include, YoomeeContentFilter::UserExtensions)
-      ApplicationController.helper(ContentFlagsHelper)
+      User.send(:include, YoomeeModeration::UserExtensions)
+      ApplicationController.helper(YoomeeModerationHelper)
     end
     
   end

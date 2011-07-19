@@ -17,10 +17,5 @@
           =content_flag_type.unresolved_content_flag_count
   %li#resolved{:class => (current_page?(resolved_moderation_content_flags_path) || params[:menu_item]=="resolved") ? "active" : ""}
     %span=link_to_moderation_content("Resolved", resolved_moderation_content_flags_path)
-  -if false
-    %li#blacklist{:class => @content_filter_words && !@whitelist ? "active" : ""}
-      =link_to_moderation_content('Black list', content_filter_words_path)
-    %li#whitelist{:class => @content_filter_words && @whitelist ? "active" : ""}
-      =link_to_moderation_content('White list', content_filter_words_path(:whitelist => true))
   %li#categories{:class => (current_page?(moderation_content_flag_types_path) ? "active" : "")}
     =link_to_moderation_content('Report categories',  moderation_content_flag_types_path)

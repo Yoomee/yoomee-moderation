@@ -5,7 +5,6 @@ class ContentFlaggingTest < ActiveSupport::TestCase
   should have_db_column(:content_flag_type_id)
   should have_db_column(:created_at)
   should have_db_column(:email)
-  should have_db_column(:flagged_by_human).of_type(:boolean)
   should have_db_column(:user_id)
   should have_db_column(:message)
   should have_db_column(:updated_at)
@@ -49,20 +48,6 @@ class ContentFlaggingTest < ActiveSupport::TestCase
     
   end
 
-  # TODO - we may want to implement filtered_attributes on User
-  # context "content is flagged by human" do
-  # 
-  #   setup do
-  #     @user = Factory.create(:user)
-  #     @content_flag = Factory.create(:content_flag, :attachable => @user)
-  #     @content_flagging = Factory.create(:content_flagging, :content_flag => @content_flag, :flagged_by_human => true)
-  #   end
-  #   
-  #   should "create content flag fields for all filtered attributes" do
-  #     assert_equal @content_flag.content_flag_fields.size, User.filtered_attributes.size
-  #   end
-  #   
-  # end
 
 end
 

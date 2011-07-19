@@ -1,7 +1,5 @@
-module ContentFlagsHelper
-
-  include YoomeeModeration::ReadMoreTruncate
-  
+module YoomeeModerationHelper
+    
   def comment_url(comment, url_options = {})
     polymorphic_url(comment.commentable, url_options)
   end
@@ -70,13 +68,6 @@ module ContentFlagsHelper
     link_to(*args, &block)
   end
   
-  def link_to_every_word(object, attribute)
-    returning html = "" do
-      html << content_tag(:p, :class => "highlightable"){object.send(attribute).gsub(/[\w]+/,link_to_function('\0', "HighlightText.toggleHighlighted($(this))"))}
-      html << render('content_filter_words/multiple_words_form', :uid => "#{object.class.to_s.underscore}_#{object.id}_#{attribute}")
-    end
-  end
-  
   def link_to_url(url, *args, &block)
     options = args.extract_options!.symbolize_keys.reverse_merge!(:http => true, :target => "_blank")
     link_url = url.match(/^.+\:\/\//) ? url : "http://" + url
@@ -113,44 +104,6 @@ module ContentFlagsHelper
     out.html_safe
   end
   
-  def highlight_content_filter_words_javascript
-    javascript_tag do
-      "var HighlightText = {
-        addHighlighted: function(elem) {
-          elem.parent().children(':contains(\"' + elem.html() + '\")').addClass('cf_highlighted')
-          var form = HighlightText.getForm(elem);
-          form.prepend('<input name=\\'content_filter_words[]\\' type=\\'hidden\\' value=\\'' + elem.html() + '\\' />');
-          if(form.not(':visible')) { form.show(); }
-        },
-        clearHighlighting: function(form_id){
-          $('#' + form_id + '').prev('p.highlightable').children('.cf_highlighted').removeClass('cf_highlighted');
-        },
-        getForm: function(elem) {
-          return elem.parent().next('form');
-        },
-        loading: function(elem){
-          elem.children('input[type=\"submit\"]').hide();
-          elem.children('.ajax_loader').show();
-        },
-        removeHighlighted: function(elem) {
-          elem.parent().children().filter(function(){return $(this).html() == elem.html();}).removeClass('cf_highlighted');
-          var form = HighlightText.getForm(elem);
-          form.children('input[value=\"' + elem.html() + '\"]').remove();
-          if(elem.siblings('.cf_highlighted').length < 1) {
-            form.hide();
-          }
-        },
-        toggleHighlighted: function(elem) {
-          if(elem.hasClass('cf_highlighted')){
-            HighlightText.removeHighlighted(elem);              
-          } else {
-            HighlightText.addHighlighted(elem);
-          }
-        }
-      }
-      "
-    end
-  end
   
 end
 

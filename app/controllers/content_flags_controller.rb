@@ -1,8 +1,6 @@
-# require 'googlecharts'
-# require 'haml'
 class ContentFlagsController < ModerationBaseController
   
-  admin_only :index, :inbox, :remove, :restore, :resolve, :unresolve, :resolved, :show
+  admin_only :index, :inbox, :resolve, :unresolve, :resolved, :show
   
   def new
     @content_flag = ContentFlag.new(:url => params[:url], :attachable => get_attachable)
@@ -50,19 +48,6 @@ class ContentFlagsController < ModerationBaseController
     end
   end
   
-  # Marks attachable as removed
-  def remove
-    @content_flag = ContentFlag.find(params[:id])
-    if @content_flag.removable?
-      @content_flag.attachable.update_attributes(:removed_by => current_user, :removed_at => Time.now)
-    end
-    if params[:in_moderation]
-      replace_moderation_content('content_flag', :content_flag => @content_flag)
-    else
-      nil
-    end
-  end
-  
   def resolve
     @content_flag = ContentFlag.find(params[:id])
     @content_flag.resolve!(current_user)
@@ -87,18 +72,6 @@ class ContentFlagsController < ModerationBaseController
     end
   end
   
-  # Marks attachable as removed
-  def restore
-    @content_flag = ContentFlag.find(params[:id])
-    if @content_flag.removable?
-      @content_flag.attachable.update_attributes(:removed_by => nil, :removed_at => nil)
-    end
-    if params[:in_moderation]
-      replace_moderation_content('content_flag', :content_flag => @content_flag)
-    else
-      nil
-    end
-  end
   
   def unresolve
     @content_flag = ContentFlag.find(params[:id])

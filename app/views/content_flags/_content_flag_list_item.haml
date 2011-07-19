@@ -13,9 +13,5 @@
         -unless content_flag.text.blank?
           %em=" - " + truncate(strip_tags(content_flag.text).strip, :length => 70 - content_flag.name.length)
     .badges
-      -if content_flag.auto_removed?
-        %span.badge.auto_removed{:title => "Auto removed"} !!
-      -if content_flag.flagged_by_system?
-        %span.badge.flagged_by_system{:title => "Auto flagged"}
       .badge.flaggings_count
         =content_flag.content_flaggings.count

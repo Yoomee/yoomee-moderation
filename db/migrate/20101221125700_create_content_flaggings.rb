@@ -4,7 +4,6 @@ class CreateContentFlaggings < ActiveRecord::Migration
     create_table :content_flaggings do |t|
       t.belongs_to :content_flag
       t.belongs_to :content_flag_type
-      t.boolean :flagged_by_human, :default => false
       t.belongs_to :user
       t.text :message
       t.string :email

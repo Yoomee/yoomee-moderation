@@ -50,10 +50,6 @@ class ContentFlag < ActiveRecord::Base
     end
   end
 
-  def flagged_by_system?
-    content_flaggings.not_flagged_by_human.count > 0
-  end
-
   def has_attachable?
     !attachable.nil?
   end
@@ -132,33 +128,6 @@ class ContentFlag < ActiveRecord::Base
     end
   end
   
-  def removable?
-    return false if !has_attachable?
-    attachable.respond_to?(:removed?)
-  end
-  
-  def removed?
-    removable? && attachable.removed?
-  end
-  
-  def auto_removed?
-    removed? && attachable.removed_by.nil?
-  end
-  
-  def auto_remove!
-    return false if !removable?
-    attachable.update_attributes(:removed_at => Time.now, :removed_by => nil)
-  end
-  
-  def auto_remove_if_needed
-    return true if !removable?
-    if content_flaggings.from_today.from_different_people.length == (APP_CONFIG['flagging_threshold'] || 3)
-      auto_remove!
-    else
-      true
-    end
-  end
-  
   def resolve!(user)
     return nil if user.nil?
     self.update_attributes(:resolved_by => user, :resolved_at => Time.now)
@@ -181,14 +150,7 @@ class ContentFlag < ActiveRecord::Base
 
   def text
     text_field ? text_field.value : nil
-  end
-
-  def validate_attachable
-    if has_attachable?
-      attachable.content_filter_valid?
-    end
-  end
-  
+  end  
   
   private
   def set_opened_at
