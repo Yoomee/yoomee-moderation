@@ -30,6 +30,9 @@
           %li.text
             =form.label :email, "If you would like to be contacted, please enter your email address:"
             =form.text_field :email
+            -if content_flagging.errors.invalid?(:email)
+              %p.inline-errors
+                =form.error_message_on(:email)
           %li{:style => "width: 1px; height: 1px; overflow: hidden;"}
             -# Spam prevention
             =form.label :comment, "Please leave the following field blank"

@@ -131,9 +131,7 @@
 #moderation_left_col ul#content_flag_types {
   list-style:none;
 }
-.wordlist #moderation_left_col ul#content_flag_types {
-/*  display:none;
-*/}
+
 #moderation_left_col li.content_flag_type {
 
 }
@@ -464,14 +462,6 @@ p.no_flags {
 	
 }
 
-/*.flag_history li.content_flagging{
-  background: url("/img/disclosure_closed.png") no-repeat 0px 10px;
-}
-
-.flag_history li.content_flagging.open{
-  background-image: url("/img/disclosure_open.png");
-}*/
-
 
 .flag_history li .report{
   display: none;
@@ -638,6 +628,7 @@ ul#content_flags_list a:hover .title span{
 .edit_content_flag_type_form p.inline-errors {
 	color:#DA1C5A;
 	float:left;
+	clear:both;
 	font-size:15px;
 	line-height:15px;
 	margin:7px 0 0 5px;

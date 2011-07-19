@@ -20,6 +20,9 @@
 #content_flag_box form .text input, #content_flag_box form .text_area input {
   width: auto;
 }
+#content_flag_box select#content_flagging_content_flag_type_id {
+  margin-left:10px;
+}
 #content_flag_box p.inline-errors {
   line-height: 100%;
   font-size: 11px;
@@ -28,6 +31,12 @@
   padding: 4px 4px;
   background: #9C0081;
   margin: 0;
+}
+#content_flag_box .fieldWithErrors{
+  float:left;
+}
+#content_flag_box .fieldWithErrors input{
+  border:1px solid #9C0081;
 }
 #content_flag_box .moderation_success_message {
   margin: 20px 0;
