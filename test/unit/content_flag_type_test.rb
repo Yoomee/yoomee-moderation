@@ -2,7 +2,9 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class ContentFlagTypeTest < ActiveSupport::TestCase
 
-  should have_db_column(:name)
+  should have_db_column(:name).of_type(:string)
+  should have_db_column(:color).of_type(:string)
+  
   should have_many(:content_flaggings)
   
   should validate_presence_of(:name)

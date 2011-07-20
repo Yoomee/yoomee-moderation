@@ -1,3 +1,3 @@
-Factory.define(:content_flag) do |c|
-  c.url "/pages/1"
+Factory.define(:content_flag) do |f|
+  f.association :attachable, :factory => :asset
 end

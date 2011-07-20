@@ -2,9 +2,12 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class ContentFlagFieldTest < ActiveSupport::TestCase
 
-  should have_db_column(:content_flag_id)
-  should have_db_column(:name)
-  should have_db_column(:value)
+  should have_db_column(:content_flag_id).of_type(:integer)
+  should have_db_column(:name).of_type(:string)
+  should have_db_column(:value).of_type(:text)
+  should have_db_column(:created_at).of_type(:datetime)
+  should have_db_column(:updated_at).of_type(:datetime)
+
   should belong_to(:content_flag)
   should validate_presence_of(:name)
   
@@ -15,8 +18,6 @@ class ContentFlagFieldTest < ActiveSupport::TestCase
     end
     
     should "be valid" do
-      @content_flag_field.valid?
-      puts @content_flag_field.errors.full_messages
       assert @content_flag_field.valid?
     end
     

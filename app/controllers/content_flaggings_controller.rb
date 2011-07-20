@@ -1,10 +1,7 @@
 class ContentFlaggingsController < ModerationBaseController
-  
-  admin_only :index
-  
+    
   def new
-    content_flag = get_content_flag
-    @content_flagging = content_flag.content_flaggings.build
+    @content_flagging = ContentFlagging.new(:attachable_type => params[:attachable_type], :attachable_id => params[:attachable_id], :url => params[:url])
     render :partial => "content_flaggings/form", :locals => {:content_flagging => @content_flagging}
   end
   
@@ -17,17 +14,6 @@ class ContentFlaggingsController < ModerationBaseController
         page << "$('#content_flag_box').replaceWith('#{escape_javascript(render("content_flaggings/form", :content_flagging => @content_flagging))}');"
       end
       page << "$.fancybox.resize();"
-    end
-  end
-  
-  private
-  def get_content_flag
-    if !params[:attachable_type].blank? && !params[:attachable_id].blank?
-      ContentFlag.find_or_create_by_attachable_type_and_attachable_id(params[:attachable_type].camelize, params[:attachable_id])
-    elsif !params[:url].blank?
-      ContentFlag.find_or_create_by_url(params[:url])
-    else
-      nil
     end
   end
   

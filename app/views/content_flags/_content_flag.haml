@@ -18,6 +18,8 @@
   #flag_edit_links
     -if content_flag.has_attachable?
       =link_to("View in context", content_flag.attachable, :target => "_blank")
+    -elsif !content_flag.url.blank?
+      =link_to("View in context", content_flag.url, :target => "_blank")
   -if !content_flag.current_text.blank?
     #flag_text
       =read_more_truncate(simple_format("&ldquo;#{content_flag.current_text}&rdquo;"))

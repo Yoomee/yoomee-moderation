@@ -4,9 +4,7 @@ A simple flagging system for moderating content on a site. The gem provides a he
 
   yoomee_flag_link(@asset, :text => "Flag this photo as offensive", :class => "flag-photo")
 
-An administrator is notified by email for each new flagging and all the flaggings can be viewed by admins in the moderation area.
-
-  moderation_path -> '/moderation/home'
+An administrator is notified by email for each new flagging and all the flaggings can be viewed by admins in the moderation area ('/moderation/home' or moderation_path).
 
 == Installation
 
@@ -14,9 +12,18 @@ Add the gem to your Gemfile:
 
   gem "yoomee-moderation"
  
-Add migrations to db/migrate, assets to /public and yoomee_moderation.yml to /config using the install rake task. Then run all the new migrations.
+Run the install rake task, which will add migrations to db/migrate, assets to /public and yoomee_moderation.yml to /config:
 
  rake yoomee_moderation:install
+ 
+Run migrations:
+
  rake db:migrate
  
 Edit config/yoomee_moderation.yml to set where moderation emails get sent to etc.
+
+== Tests
+
+A dummy Rails 3 app exists in test/dummy is used to run tests. From the root directory of the gem:
+
+  rake test

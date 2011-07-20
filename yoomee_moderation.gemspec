@@ -8,10 +8,13 @@ Gem::Specification.new do |s|
   
   s.add_dependency("haml")
   s.add_dependency("googlecharts")
-  s.add_dependency("rails", "3.0.3")
-  s.add_dependency('shoulda')
-  s.add_dependency('factory_girl')
+  s.add_dependency("rails", '3.0.3')
   s.add_dependency('mysql')
+  
+  s.add_development_dependency('shoulda')
+  s.add_development_dependency('mocha')
+  s.add_development_dependency('factory_girl')
+  
   
   s.files = Dir["{app,lib,config,db}/**/*"] + ["MIT-LICENSE", "Rakefile", "Gemfile", "README.rdoc"]
   # s.files         = `git ls-files`.split("\n")

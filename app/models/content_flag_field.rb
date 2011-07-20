@@ -1,7 +1,6 @@
 class ContentFlagField < ActiveRecord::Base
 
   belongs_to :content_flag
-  
   validates_presence_of :name
   
   scope :latest, :order => "created_at DESC"

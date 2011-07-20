@@ -5,6 +5,7 @@ require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 require "rails/test_help"
 require "shoulda"
 require "factory_girl"
+require "mocha"
 #require File.dirname(__FILE__) + '/shoulda_extensions'
 
 Factory.class_eval do

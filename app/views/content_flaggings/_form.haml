@@ -13,26 +13,28 @@
     %h3 Inappropriate Content
     %p
       Use the box below to provide details about the inappropriate content you have found. An email will be sent to the website administrator.
-    -form_for(content_flagging, :url => moderation_content_flaggings_path, :remote => true) do |form|
+    =form_for(content_flagging, :url => moderation_content_flaggings_path, :remote => true) do |form|
       %fieldset.inputs
         %ol
           %li.hidden
-            =form.hidden_field :content_flag_id
+            =form.hidden_field :attachable_type 
+            =form.hidden_field :attachable_id
+            =form.hidden_field :url
           %li.select
             =form.label:content_flag_type_id, "Why is this inappropriate?"
-            =form.select :content_flag_type_id, "<option value=''>Please select...</option>" + options_from_collection_for_select(ContentFlagType.all, :id, :name)
-            -if content_flagging.errors.invalid?(:content_flag_type_id)
+            =form.select :content_flag_type_id, "<option value=''>Please select...</option>" + options_from_collection_for_select(ContentFlagType.all, :id, :name, content_flagging.content_flag_type_id)
+            -if content_flagging.errors[:content_flag_type_id].any?
               %p.inline-errors
-                =form.error_message_on(:content_flag_type_id)
+                =content_flagging.errors.generate_message(:content_flag_type_id)
           %li.text
             =form.label :message, "Please give some details here"
             =form.text_area :message, :cols => 69, :rows => 5
           %li.text
             =form.label :email, "If you would like to be contacted, please enter your email address:"
             =form.text_field :email
-            -if content_flagging.errors.invalid?(:email)
+            -if content_flagging.errors[:email].any?
               %p.inline-errors
-                =form.error_message_on(:email)
+                =content_flagging.errors.generate_message(:email)
           %li{:style => "width: 1px; height: 1px; overflow: hidden;"}
             -# Spam prevention
             =form.label :comment, "Please leave the following field blank"
