@@ -9,7 +9,7 @@ module YoomeeModerationHelper
   end
   
   def content_flag_link(*args)
-    include_yoomee_fancybox_js
+    #include_yoomee_fancybox_js
     options = args.extract_options!
     options.reverse_merge!(:text => "Report")
     attachable = args.first
@@ -45,12 +45,12 @@ module YoomeeModerationHelper
   def include_yoomee_fancybox_js
     return true if @included_ymfb_js
     content_for :head do
-      content = javascript_include_tag('/yoomee_moderation/js/jquery.fancybox-1.3.4.pack.js',
-                             '/yoomee_moderation/js/jquery.easing-1.3.pack.js',
-                             '/yoomee_moderation/js/load_fancybox.js',
-                             '/yoomee_moderation/js/jquery.mousewheel-3.0.2.pack.js', 
+      content = javascript_include_tag('/yoomee_moderation/jquery.fancybox-1.3.4.pack.js',
+                             '/yoomee_moderation/jquery.easing-1.3.pack.js',
+                             '/yoomee_moderation/load_fancybox.js',
+                             '/yoomee_moderation/jquery.mousewheel-3.0.2.pack.js', 
                               :cache => "yoomee_fancy_box")
-    content << "\n#{stylesheet_link_tag('/yoomee_moderation/css/jquery.fancybox.css', '/yoomee_moderation/css/content_flag_box.css')}".html_safe
+    content << "\n#{stylesheet_link_tag('/yoomee_moderation/jquery.fancybox.css', '/yoomee_moderation/content_flag_box.css')}".html_safe
     end
     @included_ymfb_js = true
   end

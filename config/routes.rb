@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     
         
   end
-  match '/moderation/home', :to => 'content_flags#index', :as => 'moderation'
+  match '/moderation(/home)', :to => 'content_flags#index', :as => 'moderation'
   
   match ":attachable_type/:attachable_id/content_flaggings/new", :to => 'content_flaggings#new'
 

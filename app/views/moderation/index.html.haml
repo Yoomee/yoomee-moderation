@@ -1,10 +1,8 @@
 -content_for :head do
-  =javascript_include_tag "/yoomee_moderation/js/jquery.colorPicker.js"
-  =javascript_include_tag "/yoomee_moderation/js/yoomee_moderation.js"
-  =stylesheet_link_tag "/yoomee_moderation/css/styles.css"
-  =include_yoomee_fancybox_js
+  =#stylesheet_link_tag "/yoomee_moderation/styles.css"
+  =#include_yoomee_fancybox_js
 
--page_title "Moderation", :hidden => true
+-#page_title "Moderation", :hidden => true
 #moderation_wrapper
   #moderation_header
     %h1 Moderation tools
