@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.summary = "Gem for adding Yoomee's moderation tools to a site"
   s.authors = "developers@yoomee.com"
   s.description = ""
-  s.version = "0.0.2"
+  s.version = "0.0.3"
   
   s.add_dependency("haml")
   s.add_dependency("googlecharts")

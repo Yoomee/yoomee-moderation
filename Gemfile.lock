@@ -1,10 +1,10 @@
 PATH
   remote: .
   specs:
-    yoomee-moderation (0.0.2)
+    yoomee-moderation (0.0.3)
       googlecharts
       haml
-      mysql
+      mysql2
       rails (~> 3.1)
 
 GEM
@@ -59,7 +59,7 @@ GEM
     mocha (0.10.5)
       metaclass (~> 0.0.1)
     multi_json (1.5.0)
-    mysql (2.9.0)
+    mysql2 (0.3.11)
     polyglot (0.3.3)
     rack (1.4.4)
     rack-cache (1.2)
