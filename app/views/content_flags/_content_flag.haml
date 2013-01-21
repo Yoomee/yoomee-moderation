@@ -23,7 +23,7 @@
   -if !content_flag.current_text.blank?
     #flag_text
       =read_more_truncate(simple_format("&ldquo;#{content_flag.current_text}&rdquo;"))
-  -if content_flag.attachable.is_a?(Asset)
+  -if false #content_flag.attachable.is_a?(Asset)
     .attachable_preview
       -link_to(content_flag.attachable.url(:user_large), :class => "yoomee_fancy") do
         =uploaded_asset_tag(content_flag.attachable, :medium, content_flag.attachable.description)

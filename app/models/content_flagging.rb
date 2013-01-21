@@ -35,7 +35,7 @@ class ContentFlagging < ActiveRecord::Base
       days = []
       while date <= Date.today
         res = {}
-        if day_res = by_flag_type[date.day.to_s]
+        if day_res = by_flag_type[date.day]
           day_res.map{|r| res[r.content_flag_type_id] = r.count}
         end
         flag_type_ids.each_with_index{|fti, idx| flagging_data_sets[idx] << (res[fti] || 0).to_i}

@@ -85,7 +85,7 @@ module YoomeeModerationHelper
   end
   
   def moderation_image_tag(source, options = {})
-    image_tag("/yoomee_moderation/img/#{source}", options)
+    image_tag("/assets/yoomee_moderation/img/#{source}", options)
   end
   
   def moderation_nav_links(content_flag)
