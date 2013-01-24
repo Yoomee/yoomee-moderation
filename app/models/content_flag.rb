@@ -84,7 +84,7 @@ class ContentFlag < ActiveRecord::Base
     elsif has_attachable?
       "A #{attachable_type.downcase}"
     else
-      APP_CONFIG['site_url'] + url
+      "#{APP_CONFIG['site_url']}#{url.to_s}"
     end
   end
   alias_method :to_s, :name
