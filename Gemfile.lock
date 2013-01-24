@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    yoomee-moderation (0.0.3)
+    yoomee-moderation (0.0.4)
       googlecharts
       haml
       mysql2
