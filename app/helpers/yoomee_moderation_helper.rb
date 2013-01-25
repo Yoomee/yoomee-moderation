@@ -1,12 +1,4 @@
 module YoomeeModerationHelper
-    
-  def comment_url(comment, url_options = {})
-    polymorphic_url(comment.commentable, url_options)
-  end
-  
-  def comment_path(comment, url_options = {})
-    polymorphic_path(comment.commentable, url_options)
-  end
   
   def content_flag_link(*args)
     #include_yoomee_fancybox_js
