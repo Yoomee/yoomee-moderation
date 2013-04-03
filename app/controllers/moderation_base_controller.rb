@@ -36,7 +36,11 @@ class ModerationBaseController < ApplicationController
   end
   
   def gate_keep
-    open_action? || ((defined? require_admin) ? require_admin : false)
+    if open_action? || (current_user && current_user.admin?)
+      true
+    else
+      raise CanCan::AccessDenied, "You're not allowed to access this page"
+    end
   end
   
   def open_action?
