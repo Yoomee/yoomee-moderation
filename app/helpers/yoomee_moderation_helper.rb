@@ -48,7 +48,7 @@ module YoomeeModerationHelper
   end
   
   def link_to_moderation_content(*args, &block)
-    defaults = {:method => :get, :remote => true}
+    defaults = {:method => :get, :remote => false}
     defaults[:class] = "moderation_content_link #{defaults[:class]}".strip
     if block_given?
       args[1] ||= {}
