@@ -37,20 +37,38 @@ GEM
     activesupport (3.2.11)
       i18n (~> 0.6)
       multi_json (~> 1.0)
+    addressable (2.2.8)
     arel (3.0.2)
     bourne (1.1.2)
       mocha (= 0.10.5)
     builder (3.0.4)
+    engineyard (1.4.29)
+      engineyard-serverside-adapter (= 1.6.4)
+      escape (~> 0.0.4)
+      highline (~> 1.6.1)
+      json_pure
+      launchy (= 2.0.5)
+      net-ssh (~> 2.2.1)
+      rest-client (~> 1.6.0)
+    engineyard-serverside-adapter (1.6.4)
+      escape (~> 0.0.4)
+      json_pure
     erubis (2.7.0)
+    escape (0.0.4)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
+    git (1.2.5)
     googlecharts (1.6.8)
     haml (4.0.2)
       tilt
+    highline (1.6.18)
     hike (1.2.2)
     i18n (0.6.1)
     journey (1.0.4)
     json (1.7.7)
+    json_pure (1.7.7)
+    launchy (2.0.5)
+      addressable (~> 2.2.6)
     mail (2.4.4)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -61,6 +79,7 @@ GEM
       metaclass (~> 0.0.1)
     multi_json (1.5.0)
     mysql2 (0.3.11)
+    net-ssh (2.2.1)
     polyglot (0.3.3)
     rack (1.4.5)
     rack-cache (1.2)
@@ -87,6 +106,8 @@ GEM
     rake (10.0.4)
     rdoc (3.12.2)
       json (~> 1.4)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     shoulda (3.3.2)
       shoulda-context (~> 1.0.1)
       shoulda-matchers (~> 1.4.1)
@@ -105,6 +126,11 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.37)
+    ym_tools (0.1.1)
+      engineyard (~> 1.4.22)
+      git (~> 1.2.5)
+      net-ssh (= 2.2.1)
+      rails
 
 PLATFORMS
   ruby
@@ -113,4 +139,5 @@ DEPENDENCIES
   factory_girl
   mocha
   shoulda
+  ym_tools
   yoomee-moderation!

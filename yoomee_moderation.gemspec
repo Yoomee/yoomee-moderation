@@ -15,6 +15,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency('shoulda')
   s.add_development_dependency('mocha')
   s.add_development_dependency('factory_girl')
+  s.add_development_dependency('ym_tools')
   
   
   s.files = Dir["{app,lib,config,db}/**/*"] + ["MIT-LICENSE", "Rakefile", "Gemfile", "README.rdoc"]
