@@ -95,7 +95,7 @@ class ContentFlagging < ActiveRecord::Base
   end
 
   def send_email
-    ContentFlaggingNotifier.content_flagging_notification(self).deliver
+    ContentFlaggingNotifier.delay.content_flagging_notification(self)
   end
 
 end
