@@ -145,7 +145,7 @@
 	font-weight: normal;
 	padding: 2px 10px 2px 3px;
  	margin: 3px 0 0;
-  	width: 200px;
+  	width: 191px;
   	font-size: 13px;
   	background:none;
 }
@@ -495,6 +495,21 @@ p.no_flags {
   text-decoration:none;
 }
 
+#content_flags_pagination {
+  float:left;
+  clear:both;
+  padding: 0 20px 20px;
+}
+
+#content_flags_pagination .pagination{
+  margin:0 2px;
+}
+
+#content_flags_pagination a,
+#content_flags_pagination span {
+  padding:5px 15px;
+}
+
 .content_flag_list_item {
   margin-left:0;
   float:left;
@@ -546,24 +561,12 @@ ul#content_flags_list a:hover .title span{
 
 .content_flag_list_item .badges{
   float:right;
+  padding:5px 0px;
 }
 .content_flag_list_item .badge{
   float:left;
 }
-.content_flag_list_item .badge.flaggings_count{
-  height:20px;
-  margin-right:5px;
-  background: url("/yoomee_moderation/img/flag.png") no-repeat bottom right;
-  padding-right:15px;
-}
 .content_flag_list_item .badges a {
-  color:white;
-  font-size: 12px;
-  font-weight: normal;
-  padding: 3px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px; 
 }
 .content_flag_body {
   padding: 5px;

@@ -2,6 +2,8 @@
   #content_flags_list
     -content_flags.each do |content_flag|
       =render 'content_flags/content_flag_list_item', :content_flag => content_flag, :last => (content_flag == content_flags.last)
+  -if content_flags.respond_to?(:total_pages)
+    #content_flags_pagination=will_paginate(content_flags, :remote => true)
 -else
   %p.no_flags There are no pending flags.
 %br.clear

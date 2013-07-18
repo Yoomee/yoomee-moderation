@@ -63,7 +63,7 @@ class ContentFlagsController < ModerationBaseController
   end
   
   def resolved
-    @content_flags = ContentFlag.resolved.descend_by_resolved_at
+    @content_flags = ContentFlag.resolved.descend_by_resolved_at.paginate(:per_page => 20, :page => params[:page])
     set_up_sidebar
     if request.xhr?
       replace_moderation_content('content_flag_list', :content_flags => @content_flags, :content_flag_types => @content_flag_types, :active_li => "resolved")
