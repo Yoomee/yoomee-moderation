@@ -18,7 +18,7 @@ class ContentFlagging < ActiveRecord::Base
 
   before_create :create_content_flag_fields_and_unresolve
   before_validation :build_content_flag, :on => :create
-  before_save :remove_post_if_needed
+  before_save :remove_post_or_comment_if_needed
   after_create :send_email
 
   scope :created_at_greater_than, lambda {|date| {:conditions => ["created_at > ?", date]}}
@@ -95,8 +95,8 @@ class ContentFlagging < ActiveRecord::Base
     content_flag.unresolve! if content_flag.resolved?
   end
 
-  def remove_post_if_needed
-    if attachable && attachable.is_a?(Post)
+  def remove_post_or_comment_if_needed
+    if attachable && (attachable.is_a?(Post) || attachable.is_a?(Comment))
       if !attachable.removed? && attachable.content_flaggings.where("content_flaggings.user_id IS NOT NULL AND content_flaggings.user_id != ?",User.elephant.id).group("content_flaggings.user_id").to_a.size >= 2
         attachable.update_attribute(:removed, true)
       end
