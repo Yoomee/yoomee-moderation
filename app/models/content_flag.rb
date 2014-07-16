@@ -1,3 +1,4 @@
+require 'iconv'
 class ContentFlag < ActiveRecord::Base
 
   belongs_to :attachable, :polymorphic => true
@@ -149,7 +150,7 @@ class ContentFlag < ActiveRecord::Base
   end
 
   def text
-    text_field ? text_field.value : nil
+    text_field ? Iconv.conv('ASCII//IGNORE', 'UTF8', text_field.value) : nil
   end  
   
   private
