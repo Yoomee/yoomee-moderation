@@ -6,18 +6,19 @@ Gem::Specification.new do |s|
   s.authors = "developers@yoomee.com"
   s.description = ""
   s.version = "0.0.12"
-  
+
   s.add_dependency("haml")
   s.add_dependency("googlecharts")
   s.add_dependency("rails", '~> 3.1')
   s.add_dependency('mysql2')
-  
+
   s.add_development_dependency('shoulda')
   s.add_development_dependency('mocha')
   s.add_development_dependency('factory_girl')
   s.add_development_dependency('ym_tools')
-  
-  
+  s.add_development_dependency('geminabox')
+
+
   s.files = Dir["{app,lib,config,db}/**/*"] + ["MIT-LICENSE", "Rakefile", "Gemfile", "README.rdoc"]
   # s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
