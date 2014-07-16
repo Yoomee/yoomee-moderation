@@ -11,15 +11,15 @@ An administrator is notified by email for each new flagging and all the flagging
 Add the gem to your Gemfile:
 
   gem "yoomee-moderation"
- 
+
 Run the install rake task, which will add migrations to db/migrate, assets to /public and yoomee_moderation.yml to /config:
 
  rake yoomee_moderation:install
- 
+
 Run migrations:
 
  rake db:migrate
- 
+
 Edit config/yoomee_moderation.yml to set where moderation emails get sent to etc.
 
 == Tests
@@ -27,3 +27,22 @@ Edit config/yoomee_moderation.yml to set where moderation emails get sent to etc
 A dummy Rails 3 app exists in test/dummy is used to run tests. From the root directory of the gem:
 
   rake test
+
+== Releasing a new version of the gem
+
+Update the version number in the gemspec and commit the change
+  git commit -m 'Bump version to #{new_version}'
+  git push
+
+Build the gem:
+  bundle exec rake build
+
+Push to gem server
+  gem inabox
+
+Add git tag
+  git tag v#{new_version}
+
+Push tags
+  git push --tags
+
