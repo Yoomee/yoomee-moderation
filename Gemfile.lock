@@ -1,13 +1,14 @@
 PATH
   remote: .
   specs:
-    yoomee-moderation (0.0.9)
+    yoomee-moderation (0.0.12)
       googlecharts
       haml
       mysql2
       rails (~> 3.1)
 
 GEM
+  remote: https://yoomee:wLjuGMTu30AvxVyIrq3datc73LVUkvo@gems.yoomee.com/
   remote: http://rubygems.org/
   specs:
     actionmailer (3.2.11)
@@ -59,7 +60,7 @@ GEM
       activesupport (>= 3.0.0)
     git (1.2.5)
     googlecharts (1.6.8)
-    haml (4.0.3)
+    haml (4.0.5)
       tilt
     highline (1.6.18)
     hike (1.2.2)
@@ -78,7 +79,7 @@ GEM
     mocha (0.10.5)
       metaclass (~> 0.0.1)
     multi_json (1.5.0)
-    mysql2 (0.3.12)
+    mysql2 (0.3.16)
     net-ssh (2.2.1)
     polyglot (0.3.3)
     rack (1.4.5)
