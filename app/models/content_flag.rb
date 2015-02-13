@@ -12,7 +12,7 @@ class ContentFlag < ActiveRecord::Base
   validates_presence_of :url, :unless => :has_attachable?
 
   scope :latest, :select => "content_flags.*, COUNT(content_flaggings.id) AS flagging_count", :joins => :content_flaggings, :group => "content_flags.id", :order => "flagging_count DESC, content_flags.opened_at DESC"
-  scope :unresolved, :select => "DISTINCT content_flags.*", :joins => :content_flaggings, :conditions => "content_flags.resolved_at IS NULL"
+  scope :unresolved, -> { select("DISTINCT content_flags.*").joins(:content_flaggings).where("content_flags.resolved_at IS NULL") }
   scope :resolved, :conditions => "content_flags.resolved_at IS NOT NULL"
   scope :for_type, lambda {|flag_type| {:select => "DISTINCT content_flags.*", :joins => :content_flaggings, :conditions => ["content_flaggings.content_flag_type_id = ?", flag_type.id]}}
   scope :ascend_by_resolved_at, :order => "content_flags.resolved_at ASC"
