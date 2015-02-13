@@ -1,14 +1,14 @@
 class ModerationBaseController < ApplicationController
-  
+
   helper :read_more_truncate
 
-  class_inheritable_hash :permission_levels
+  class_attribute :permission_levels
   self.permission_levels = {}
 
   before_filter :gate_keep
 
   class << self
-    
+
     def admin_only(*actions)
       set_permission_levels(actions, :admin_only)
     end
@@ -26,15 +26,15 @@ class ModerationBaseController < ApplicationController
       level = level.to_sym if !level.is_a?(Proc)
       self.permission_levels[action.to_sym] = level
     end
-  
+
     def set_permission_levels(actions, level)
       actions.flatten.each do |action|
         set_permission_level(action, level)
       end
     end
-    
+
   end
-  
+
   def gate_keep
     if open_action? || (current_user && current_user.admin?)
       true
