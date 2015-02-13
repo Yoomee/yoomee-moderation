@@ -7,7 +7,7 @@ class ContentFlagging < ActiveRecord::Base
 
   delegate :attachable, :has_attachable?, :to => :content_flag
 
-  validates_format_of :email, :with => /^[^\s]+@[^\s]*\.[a-z]{2,}$/, :allow_blank => true
+  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, :allow_blank => true
   validates_presence_of :content_flag_type_id, :message => "please select a reason why you are reporting this content"
   validates_presence_of :content_flag
   
