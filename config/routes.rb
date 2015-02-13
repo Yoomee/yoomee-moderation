@@ -13,11 +13,10 @@ Rails.application.routes.draw do
     end
     resources :content_flaggings
     resources :content_flag_types
-    
-        
+
   end
-  match '/moderation(/home)', :to => 'content_flags#index', :as => 'moderation'
-  
-  match ":attachable_type/:attachable_id/content_flaggings/new", :to => 'content_flaggings#new'
+  get '/moderation(/home)', :to => 'content_flags#index', :as => 'moderation'
+
+  get ":attachable_type/:attachable_id/content_flaggings/new", :to => 'content_flaggings#new'
 
 end
