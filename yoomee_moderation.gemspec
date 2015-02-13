@@ -9,8 +9,9 @@ Gem::Specification.new do |s|
 
   s.add_dependency("haml")
   s.add_dependency("googlecharts")
-  s.add_dependency("rails", '~> 3.1')
+  s.add_dependency("rails", '~> 4.0')
   s.add_dependency('mysql2')
+  s.add_dependency('iconv')
 
   s.add_development_dependency('shoulda')
   s.add_development_dependency('mocha')
