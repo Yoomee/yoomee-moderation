@@ -13,6 +13,9 @@ module YoomeeModeration
       require 'yoomee_moderation/app_config'
       User.send(:include, YoomeeModeration::UserExtensions)
       ApplicationController.helper(YoomeeModerationHelper)
+      Rails.application.config.assets.precompile += %w(
+        yoomee_moderation/img/*
+      )
     end
     
   end
