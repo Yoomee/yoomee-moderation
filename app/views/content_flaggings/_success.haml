@@ -2,6 +2,7 @@
 
 %p.moderation_success_message
   Thanks for reporting this content as inappropriate. The system administrators have been notified. We apologise for any offensive material posted.
-  
+
 %p.moderation_close_link
-  =link_to_function("Close", "$.fancybox.close()", :class => "bttn_l")
+  -# =link_to_function("Close", "$.fancybox.close()", :class => "bttn_l")
+  =link_to "Close", "#", onclick: "$.fancybox.close()", :class => "bttn_l"
