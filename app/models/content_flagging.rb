@@ -10,7 +10,7 @@ class ContentFlagging < ActiveRecord::Base
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, :allow_blank => true
   validates_presence_of :content_flag_type_id, :message => "please select a reason why you are reporting this content"
   validates_presence_of :content_flag
-  
+
   # for spam prevention
   attr_accessor :comment
   attr_writer :attachable_type, :attachable_id, :url
@@ -30,7 +30,7 @@ class ContentFlagging < ActiveRecord::Base
       date = 27.days.ago.to_date
       by_flag_type = find(:all, :select => "count(*) AS count, content_flag_type_id, day(created_at) AS day", :group => "content_flag_type_id").group_by(&:day)
 
-      flag_type_ids = ContentFlagType.all.collect(&:id)      
+      flag_type_ids = ContentFlagType.all.collect(&:id)
       flagging_data_sets = flag_type_ids.map{|i| []}
 
       days = []
@@ -65,7 +65,7 @@ class ContentFlagging < ActiveRecord::Base
   def attachable_type
     @attachable_type.try(:camelize) || content_flag.try(:attachable_type)
   end
-  
+
   def attachable_id
     @attachable_id || content_flag.try(:attachable_id)
   end
@@ -82,7 +82,7 @@ class ContentFlagging < ActiveRecord::Base
       self.content_flag ||= ContentFlag.find_or_initialize_by_url(url)
     end
   end
-  
+
   def create_content_flag_fields_and_unresolve
     if has_attachable?
       attachable.class.columns.collect{|col|col.name if ([:text, :string].include?(col.type) && !col.name.match(/type$/))}.compact.each do |attribute|
@@ -97,7 +97,7 @@ class ContentFlagging < ActiveRecord::Base
 
   def remove_post_or_comment_if_needed
     if attachable && (attachable.is_a?(Post) || attachable.is_a?(Comment))
-      if !attachable.removed? && attachable.content_flaggings.where("content_flaggings.user_id IS NOT NULL AND content_flaggings.user_id != ?",User.elephant.id).group("content_flaggings.user_id").to_a.size >= 2
+      if !attachable.removed? && attachable.content_flaggings.select("content_flaggings.user_id").where("content_flaggings.user_id IS NOT NULL AND content_flaggings.user_id != ?",User.elephant.id).group("content_flaggings.user_id").to_a.size >= 2
         attachable.update_attribute(:removed, true)
       end
     end

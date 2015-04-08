@@ -1,0 +1,5 @@
+<% if @success %>
+  $('#content_flag_form_wrapper').replaceWith('<%= escape_javascript(render("content_flaggings/success")) %>');
+<% else %>
+  $('#content_flag_box').replaceWith('<%= escape_javascript(render("content_flaggings/form", :content_flagging => @content_flagging)) %>');
+<% end %>
