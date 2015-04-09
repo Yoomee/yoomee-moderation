@@ -23,7 +23,7 @@ class ContentFlagging < ActiveRecord::Base
 
   scope :created_at_greater_than, lambda {|date| {:conditions => ["created_at > ?", date]}}
   scope :from_today, lambda {{:conditions => ["content_flaggings.created_at > ?", Date.today]}}
-  scope :from_different_people, :group => "content_flaggings.ip_address, content_flaggings.user_id"
+  scope :from_different_people, -> { group("content_flaggings.ip_address, content_flaggings.user_id") }
 
   class << self
     def last_month
