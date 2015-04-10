@@ -17,7 +17,7 @@ class ContentFlag < ActiveRecord::Base
   scope :for_type, lambda {|flag_type| {:select => "DISTINCT content_flags.*", :joins => :content_flaggings, :conditions => ["content_flaggings.content_flag_type_id = ?", flag_type.id]}}
   scope :ascend_by_resolved_at, -> {order("content_flags.resolved_at ASC") }
   scope :descend_by_resolved_at, -> { order("content_flags.resolved_at DESC") }
-  scope :not_including, lambda {|content_flag| {:conditions => content_flag.nil? || content_flag.id.nil? ? "" : ["content_flags.id != ?", content_flag.id]}}
+  scope :not_including, ->(content_flag) { (content_flag.nil? || content_flag.id.nil?) ? all : where("content_flags.id != #{ content_flag.id }")}
   
   class << self
     
