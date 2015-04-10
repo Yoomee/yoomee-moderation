@@ -49,7 +49,6 @@ class ModerationBaseController < ApplicationController
 
   protected
   def replace_moderation_content(partial_name, options={})
-    byebug
     @partial_name = partial_name
     @options = options
     @wrapper_class = options.delete(:wrapper_class) || 'test'

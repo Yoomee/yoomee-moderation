@@ -96,7 +96,7 @@ class ContentFlag < ActiveRecord::Base
     end
     content_flag_type = ContentFlagType.find_by_id(options[:content_flag_type_id])
     next_content_flags = content_flag_type.nil? ? ContentFlag : content_flag_type.content_flags
-    next_content_flags.unresolved.latest.not_including(self).find(:first, :group => "content_flags.id HAVING IF(flagging_count = #{content_flaggings.count}, content_flags.opened_at < '#{opened_at}', flagging_count < #{content_flaggings.count})")
+    next_content_flags.unresolved.where("content_flags.created_at < ?", self.created_at).not_including(self).order(created_at: :desc).first
   end
   
   def prev(options = {})
@@ -105,7 +105,7 @@ class ContentFlag < ActiveRecord::Base
     end
     content_flag_type = ContentFlagType.find_by_id(options[:content_flag_type_id])
     prev_content_flags = content_flag_type.nil? ? ContentFlag : content_flag_type.content_flags
-    prev_content_flags.unresolved.latest.not_including(self).find(:first, :group => "content_flags.id HAVING IF(flagging_count = #{content_flaggings.count}, content_flags.opened_at > '#{opened_at}', flagging_count > #{content_flaggings.count})", :order => "flagging_count ASC, content_flags.opened_at ASC")
+    prev_content_flags.unresolved.where("content_flags.created_at > ?", self.created_at).not_including(self).order(created_at: :asc).first
   end
   
   def text_field
