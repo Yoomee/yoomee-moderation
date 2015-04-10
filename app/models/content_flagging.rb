@@ -28,7 +28,7 @@ class ContentFlagging < ActiveRecord::Base
   class << self
     def last_month
       date = 27.days.ago.to_date
-      by_flag_type = find(:all, :select => "count(*) AS count, content_flag_type_id, day(created_at) AS day", :group => "content_flag_type_id").group_by(&:day)
+      by_flag_type = find(:all, :select => "count(*) AS count, content_flag_type_id, EXTRACT(day from created_at) AS day", :group => "content_flag_type_id, created_at").group_by(&:day)
 
       flag_type_ids = ContentFlagType.all.collect(&:id)
       flagging_data_sets = flag_type_ids.map{|i| []}
@@ -47,7 +47,7 @@ class ContentFlagging < ActiveRecord::Base
     end
 
     def last_month_max
-      res = created_at_greater_than(27.days.ago.to_date).count(:group => "day(created_at)", :order => "count_all DESC")
+      res = created_at_greater_than(27.days.ago.to_date).count(:group => "EXTRACT(day from created_at)", :order => "count_all DESC")
       res.blank? ? 10 : res.to_a[0][1]
     end
 
