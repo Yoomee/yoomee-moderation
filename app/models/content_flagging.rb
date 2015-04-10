@@ -21,7 +21,7 @@ class ContentFlagging < ActiveRecord::Base
   before_save :remove_post_or_comment_if_needed
   after_create :send_email
 
-  scope :created_at_greater_than, -> (date) { where('content_flaggingscreated_at > ?', date) }
+  scope :created_at_greater_than, -> (date) { where('content_flaggings.created_at > ?', date) }
   scope :from_today, ->  { where('content_flaggings.created_at > ?', Date.today) }
   scope :from_different_people, -> { group("content_flaggings.ip_address, content_flaggings.user_id") }
 
