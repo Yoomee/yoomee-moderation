@@ -53,7 +53,7 @@ class ContentFlagging < ActiveRecord::Base
 
     def flag_type_counts
       ret = []
-      res = ContentFlagging.count(:group => :content_flag_type_id)
+      res = ContentFlagging.group(:content_flag_type_id).count
       ContentFlagType.all.each do |ft|
         ret << (res[ft.id] || 0)
       end
