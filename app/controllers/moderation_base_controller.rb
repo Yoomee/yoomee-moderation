@@ -14,6 +14,9 @@ class ModerationBaseController < ApplicationController
     end
 
     def open_action?(action)
+      puts "*****************DEBUG**************"
+      puts permission_level(action.to_sym)
+      puts "*****************DEBUG**************"
       [:open_action, nil].include? permission_level(action.to_sym)
     end
 
