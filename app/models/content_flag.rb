@@ -150,7 +150,7 @@ class ContentFlag < ActiveRecord::Base
   end
 
   def text
-    text_field ? Iconv.conv('ASCII//IGNORE', 'UTF8', text_field.value) : nil
+    text_field ? text_field.value : nil
   end
 
   private
