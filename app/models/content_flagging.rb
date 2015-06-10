@@ -77,7 +77,7 @@ class ContentFlagging < ActiveRecord::Base
   private
   def build_content_flag
     if !attachable_type.blank? && !attachable_id.blank?
-      self.content_flag ||= ContentFlag.find_or_initialize_by_attachable_type_and_attachable_id(attachable_type, attachable_id)
+      self.content_flag ||= ContentFlag.find_or_initialize_by(attachable_type: attachable_type, attachable_id:attachable_id)
     elsif !url.blank?
       self.content_flag ||= ContentFlag.find_or_initialize_by_url(url)
     end
