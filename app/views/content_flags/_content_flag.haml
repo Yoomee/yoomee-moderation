@@ -45,7 +45,6 @@
               ="by #{link_to(item.flagger.full_name, item.flagger, :target => '_blank')}".html_safe if item.flagger
               ="#{time_ago_in_words(item.created_at)} ago"
               -unless (item.message.blank? && item.email.blank?)
-                =link_to("View Report", '#', onclick: "$(this).parent().toggleClass('open')")
                 .report
                   -if !item.message.blank?
                     %p

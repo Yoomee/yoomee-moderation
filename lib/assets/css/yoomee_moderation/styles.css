@@ -459,18 +459,12 @@ p.no_flags {
 	float: left;
 	width: 100%;
 	margin: 20px 0 0 ;
-	
-}
 
+}
 
 .flag_history li .report{
-  display: none;
-}
-
-.flag_history li.open .report{
   display: block;
 }
-
 
 #moderation_right_col #content_flag .flag_history li{
   margin-left: 0px;
