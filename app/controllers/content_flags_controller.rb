@@ -1,12 +1,12 @@
 class ContentFlagsController < ModerationBaseController
-  
+
   admin_only :index, :inbox, :resolve, :unresolve, :resolved, :show
-  
+
   def new
     @content_flag = ContentFlag.new(:url => params[:url], :attachable => get_attachable)
     render :partial => "content_flags/form", :locals => {:content_flag => @content_flag}
   end
-  
+
   def create
     @content_flag = ContentFlag.new(params[:content_flag].merge(:user => current_user))
     render :update do |page|
@@ -18,18 +18,18 @@ class ContentFlagsController < ModerationBaseController
       end
     end
   end
-  
+
   def index
     @dashboard = true
-    @flaggings = ContentFlagging.last_month         
+    @flaggings = ContentFlagging.last_month
     max = ContentFlagging.last_month_max
     @flag_timeline = Gchart.bar(:data => @flaggings[1], :size => "610x150", :max_value => max, :bar_width_and_spacing => [17,4], :axis_labels => [@flaggings[0].join('|')], :axis_with_labels => 'x,y', :bar_colors => ContentFlagType.all.collect(&:hex_color), :axis_range => [[],[0,max]], :bg_color => "444444", :custom => "&chxs=0,cccccc,9.5,0,l,cccccc|1,cccccc,9.5,0,l,cccccc")
-    
+
     @average_response = ContentFlag.average_response
     @flag_type_counts = ContentFlagging.flag_type_counts
-    
+
     @flag_type_pie = Gchart.pie(:data => @flag_type_counts, :size => "140x140", :bar_colors => ContentFlagType.all.collect(&:hex_color), :bg_color => "444444")
-    
+
     set_up_sidebar
     if request.xhr?
       replace_moderation_content('moderation/dashboard', :flag_timeline => @flag_timeline, :average_response => @average_response, :flag_type_pie => @flag_type_pie)
@@ -37,7 +37,7 @@ class ContentFlagsController < ModerationBaseController
       render :template => 'moderation/index'
     end
   end
-  
+
   def inbox
     @content_flags = ContentFlag.unresolved.latest
     set_up_sidebar
@@ -47,7 +47,7 @@ class ContentFlagsController < ModerationBaseController
       render :template => 'moderation/index'
     end
   end
-  
+
   def resolve
     @content_flag = ContentFlag.find(params[:id])
     @content_flag.resolve!(current_user)
@@ -61,9 +61,19 @@ class ContentFlagsController < ModerationBaseController
       replace_moderation_content('content_flag_list', :content_flags => ContentFlag.unresolved.latest, :content_flag_types => @content_flag_types, :active_li => "inbox")
     end
   end
-  
+
   def resolved
-    @content_flags = ContentFlag.resolved.descend_by_resolved_at.paginate(:per_page => 20, :page => params[:page])
+    if params[:q].present?
+      term = params[:q].strip
+      post_flags = ContentFlag.search_posts(term)
+      comment_flags = ContentFlag.search_comments(term)
+      message_flags = ContentFlag.search_messages(term)
+      user_flags = ContentFlag.search_users(term)
+      @content_flags = post_flags + comment_flags + message_flags + user_flags
+    else
+      @content_flags = ContentFlag.resolved.descend_by_resolved_at.paginate(:per_page => 20, :page => params[:page])
+    end
+
     set_up_sidebar
     if request.xhr?
       replace_moderation_content('content_flag_list', :content_flags => @content_flags, :content_flag_types => @content_flag_types, :active_li => "resolved")
@@ -71,14 +81,14 @@ class ContentFlagsController < ModerationBaseController
       render :template => 'moderation/index'
     end
   end
-  
-  
+
+
   def unresolve
     @content_flag = ContentFlag.find(params[:id])
     @content_flag.unresolve!
     replace_moderation_content('content_flag', :content_flag => @content_flag)
   end
-  
+
   def show
     @content_flag = ContentFlag.find(params[:id])
     @content_flag_type = ContentFlagType.find_by_id(params[:content_flag_type_id])
@@ -89,11 +99,11 @@ class ContentFlagsController < ModerationBaseController
       render :template => 'moderation/index'
     end
   end
-  
+
   private
   def get_attachable
     return nil if params[:attachable_type].blank? || params[:attachable_id].blank?
     params[:attachable_type].camelize.constantize.find(params[:attachable_id])
   end
-  
+
 end

@@ -41,6 +41,33 @@ class ContentFlag < ActiveRecord::Base
       unresolved.count(:id, :distinct => true)
     end
 
+    def search(type, query)
+      table = type.constantize.table_name
+      ContentFlag.resolved.where(attachable_type: type).
+        joins("INNER JOIN #{table} ON content_flags.attachable_id = #{table}.id").
+        includes(:content_flaggings, :user, :content_flag_fields).
+        where("#{table}.text ILIKE ?", "%#{query}%").limit(100)
+    end
+
+    def search_posts(query)
+      search('Post', query)
+    end
+
+    def search_comments(query)
+      search('Comment', query)
+    end
+
+    def search_messages(query)
+      search('Message', query)
+    end
+
+    def search_users(query)
+      ContentFlag.resolved.
+        joins("INNER JOIN users ON content_flags.user_id = users.id").
+        includes(:content_flaggings, :user, :content_flag_fields).
+        where("users.nickname ILIKE ?", "%#{query}%").limit(100)
+    end
+
   end
 
   def create_content_flag_field_if_changed(attribute, value)
@@ -53,7 +80,7 @@ class ContentFlag < ActiveRecord::Base
   end
 
   def has_attachable?
-    !attachable.nil?
+    attachable_id.present?
   end
 
   def history(field = nil)

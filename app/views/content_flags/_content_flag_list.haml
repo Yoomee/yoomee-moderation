@@ -4,6 +4,8 @@
       =render 'content_flags/content_flag_list_item', :content_flag => content_flag, :last => (content_flag == content_flags.last)
   -if content_flags.respond_to?(:total_pages)
     #content_flags_pagination=will_paginate(content_flags, :remote => true)
+-elsif params[:q].present?
+  %p.no_flags No search results found.
 -else
   %p.no_flags There are no pending flags.
 %br.clear

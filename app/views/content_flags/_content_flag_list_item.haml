@@ -14,4 +14,4 @@
           %em=" - " + truncate(strip_tags(content_flag.text).strip, :length => 70 - content_flag.name.length)
     .badges
       .badge.flaggings_count
-        =content_flag.content_flaggings.count
+        =content_flag.content_flaggings.length
