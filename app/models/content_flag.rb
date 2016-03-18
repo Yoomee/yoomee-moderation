@@ -1,6 +1,7 @@
 require 'iconv'
 class ContentFlag < ActiveRecord::Base
 
+  belongs_to :user
   belongs_to :attachable, :polymorphic => true
   belongs_to :resolved_by, :class_name => "User"
   before_create :set_opened_at
@@ -64,15 +65,6 @@ class ContentFlag < ActiveRecord::Base
       h += content_flag_fields.name_is_not("user_id")
     end
     h.sort{|x,y| y.created_at <=> x.created_at}
-  end
-
-  def user
-    return nil if !has_attachable?
-    if attachable.nil? && !(user_id_fields = content_flag_fields.name_is("user_id")).blank?
-      User.find(user_id_fields.first.value)
-    else
-      attachable.respond_to?(:user) ? attachable.user : nil
-    end
   end
 
   def user_full_name
