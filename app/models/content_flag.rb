@@ -144,6 +144,7 @@ class ContentFlag < ActiveRecord::Base
 
   def current_text
     if text_field
+      return "** The original #{attachable_type.downcase} has been deleted **" unless attachable
       attachable.send(text_field.name)
     end
   end
