@@ -100,6 +100,11 @@ class ContentFlagging < ActiveRecord::Base
     if attachable && (attachable.is_a?(Post) || attachable.is_a?(Comment))
       if !attachable.removed? && attachable.content_flaggings.select("content_flaggings.user_id").where("content_flaggings.user_id IS NOT NULL AND content_flaggings.user_id != ?",User.elephant.id).group("content_flaggings.user_id").to_a.size >= 3
         attachable.update_attribute(:removed, true)
+        if Setting.get("AUTO_SUSPENSION") && attachable.user.role.nil?
+          if attachable.user.posts.where("removed = true AND updated_at > ?", Setting.get("AUTO_SUSPENSION_FROM")).count >= Setting.get("AUTO_SUSPENSION_THRESHOLD")
+            attachable.user.update(auto_suspended_at: DateTime.now, suspended: true, suspended_message: Snippet.find_by(slug: :auto_suspension_message).to_s)
+          end
+        end
       end
     end
   end
