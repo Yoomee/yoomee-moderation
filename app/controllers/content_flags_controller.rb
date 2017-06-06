@@ -20,6 +20,7 @@ class ContentFlagsController < ModerationBaseController
   end
 
   def index
+    @dashboard = true
     @flaggings = ContentFlagging.last_month
     set_up_sidebar
     render :template => 'moderation/index'
