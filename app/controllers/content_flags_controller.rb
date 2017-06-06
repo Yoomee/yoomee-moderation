@@ -20,22 +20,9 @@ class ContentFlagsController < ModerationBaseController
   end
 
   def index
-    @dashboard = true
     @flaggings = ContentFlagging.last_month
-    max = ContentFlagging.last_month_max
-    @flag_timeline = Gchart.bar(:data => @flaggings[1], :size => "610x150", :max_value => max, :bar_width_and_spacing => [17,4], :axis_labels => [@flaggings[0].join('|')], :axis_with_labels => 'x,y', :bar_colors => ContentFlagType.all.collect(&:hex_color), :axis_range => [[],[0,max]], :bg_color => "444444", :custom => "&chxs=0,cccccc,9.5,0,l,cccccc|1,cccccc,9.5,0,l,cccccc")
-
-    @average_response = ContentFlag.average_response
-    @flag_type_counts = ContentFlagging.flag_type_counts
-
-    @flag_type_pie = Gchart.pie(:data => @flag_type_counts, :size => "140x140", :bar_colors => ContentFlagType.all.collect(&:hex_color), :bg_color => "444444")
-
     set_up_sidebar
-    if request.xhr?
-      replace_moderation_content('moderation/dashboard', :flag_timeline => @flag_timeline, :average_response => @average_response, :flag_type_pie => @flag_type_pie)
-    else
-      render :template => 'moderation/index'
-    end
+    render :template => 'moderation/index'
   end
 
   def inbox
